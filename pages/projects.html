@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FARJAR Projects — Explore our portfolio of 42+ completed commercial fitout and construction projects across Oman.">
+  <title>Projects — FARJAR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{dark:'#161A1D',beige:'#DCD7D4',brown:'#99380B',orange:'#FF8402'},fontFamily:{inter:['Inter','sans-serif']}}}}</script>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" type="image/png" href="../assets/images/logo/farjar-logo-stacked.png">
+</head>
+<body class="font-inter">
+
+  <section class="f-page-hero">
+    <div class="f-page-hero-content">
+      <span class="f-label">Our Portfolio</span>
+      <h1>Projects</h1>
+      <p>Browse every delivery by category—each card includes a tailored project narrative, scope of work, execution and completion dates, a map link when available, and photography from our archive. Drag any row horizontally to explore.</p>
+    </div>
+  </section>
+
+  <div id="portfolioRoot"></div>
+
+  <section class="f-cta">
+    <h2 data-reveal="up">Have a Project<br>in <span style="color:var(--orange)">Mind?</span></h2>
+    <p data-reveal="up">Let's discuss how FARJAR can bring your vision to life.</p>
+    <a href="https://api.whatsapp.com/send?phone=96893930050" target="_blank" rel="noopener noreferrer" data-reveal="up"><span>Start a Conversation →</span></a>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>gsap.registerPlugin(ScrollTrigger);</script>
+  <script src="../reusable_code/loader.js"></script>
+  <script src="../reusable_code/nav.js"></script>
+  <script src="../js/animations.js"></script>
+  <script>
+    (function () {
+      const IMG = {
+        jelal: '../assets/images/projects/JELAL EFENDI RESTAURANT/JELAL EFENDI RESTAURANT 01.png',
+        vian: '../assets/images/projects/VIAN CROISSANTS/VIAN CROISSANTS 01.png',
+        alBaleed: '../assets/images/projects/AL BALEED MUSUEM/AL BALEED MUSUEM 01.jpeg',
+        myriad: '../assets/images/projects/Myriad 55/55 MYRIAD HOTEL -RUSAYL (01).png',
+        teaTown: '../assets/images/projects/Tea Town/Tea Town 01.png',
+        watchesco: '../assets/images/projects/Watchesco/Watchesco 01.png',
+        ur20: '../assets/images/projects/UR 20/UR 20 (01).png',
+        caika: '../assets/images/projects/CAIKA CAFE SALALA/CAIKA CAFE SALALA 01.png',
+        damas: '../assets/images/projects/Damas Hotel/Damas Hotel 01.png',
+        azaiba: '../assets/images/projects/55 Azaiba/55 Azaiba 01.jpeg',
+        gardens: '../assets/images/projects/55 Gardenes Mall/55 GARDENS MALL - SALALAH (01).png',
+        mawaleh: '../assets/images/projects/55 Mawaleh/55 Mawaleh 01.jpeg',
+        haffa: '../assets/images/projects/Haffa/Haffa01.jpeg',
+        rbat: "../assets/images/projects/55 R'Bat/Rbat 01.jpeg",
+        ittin: '../assets/images/projects/55 ITTIN - SALALAH/55 ITTIN - SALALAH 01 .png',
+        mabela: '../assets/images/projects/55 mabela II/55 mabela II 01.jpeg',
+        default55: '../assets/images/projects/55 Azaiba/55 Azaiba 01.jpeg',
+      };
+
+      function imageFor55Location(loc) {
+        const u = loc.toUpperCase();
+        if (u.includes('GARDENS')) return IMG.gardens;
+        if (u.includes('MYRIAD')) return IMG.myriad;
+        if (u.includes('MAWALEH')) return IMG.mawaleh;
+        if (u.includes('HAFFA')) return IMG.haffa;
+        if (u.includes('RUBAT') || u.includes("R'BAT")) return IMG.rbat;
+        if (u.includes('ITTIN')) return IMG.ittin;
+        if (u.includes('MABELA')) return IMG.mabela;
+        if (u.includes('AZAIBA') || u.includes('AIRPORT')) return IMG.azaiba;
+        return IMG.default55;
+      }
+
+      function imageForProject(row) {
+        if (row.image) return row.image;
+        const n = row.name.toUpperCase();
+        const l = row.location.toUpperCase();
+        if (n.includes('JELAL')) return IMG.jelal;
+        if (n.includes('VIAN')) return IMG.vian;
+        if (n.includes('AL BALEED')) return IMG.alBaleed;
+        if (n.includes('WATCHESCO')) return IMG.watchesco;
+        if (n.includes('TEA TOWN')) return IMG.teaTown;
+        if (n.includes('DAMAS')) return IMG.damas;
+        if (n.includes('CAIKA')) return IMG.caika;
+        if (n.includes('20UR')) return IMG.ur20;
+        if (n.includes('55 COFFEE')) return imageFor55Location(l);
+        return IMG.mawaleh;
+      }
+
+      const categories = [
+        {
+          key: 'fnb',
+          eyebrow: 'Cafés, restaurants & coffee',
+          title: 'Food & beverage',
+          description: 'High-traffic F&B environments where layout, lighting, and durable finishes need to work as hard as the service team. We deliver coordinated fitout, joinery, furniture, MEP, and signage so each brand reads clearly from the first visit.',
+          cardTag: 'Food & beverage',
+          rows: [
+            { name: '55 COFFEE', location: 'Airport Heights, Ghala', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/txu6A7owK4Kf7e3Q9', execution: '8/23/2023', completion: '11/15/2023' },
+            { name: '55 COFFEE', location: 'Mabela - 2', scope: 'AC works', map: 'https://maps.app.goo.gl/FBywsoko7sukts7b8', execution: '11/18/2023', completion: '11/24/2023' },
+            { name: '55 COFFEE', location: 'Mawaleh, Seeb', scope: 'MEP & civil works', map: 'https://maps.app.goo.gl/cyMybjb7mYSoC7wT6', execution: '9/14/2023', completion: '12/18/2023' },
+            { name: '55 COFFEE', location: 'Myriad Hotel - Rusayl', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/2cDKb9DZ6wgs6D9u9', execution: '12/2/2023', completion: '3/4/2024' },
+            { name: '55 COFFEE', location: 'Suwaiq', scope: 'AC servicing', map: null, execution: '4/4/2024', completion: '4/6/2024' },
+            { name: '55 COFFEE', location: 'Rubat Street - Salalah', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/e9c8daigvjmtxKPB8', execution: '4/10/2024', completion: '6/15/2024' },
+            { name: '55 COFFEE', location: 'Gardens Mall - Salalah', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/sXcB9aDWZLLtURyz5', execution: '8/1/2024', completion: '10/30/2024' },
+            { name: '55 COFFEE', location: 'Haffa Walk - Salalah', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/BVxDy34Po8k47sR98', execution: '8/4/2024', completion: '11/13/2024' },
+            { name: '55 COFFEE', location: 'Azaiba (Near Airport)', scope: 'Maintenance', map: 'https://maps.app.goo.gl/ijtb5HWRh2kUyMom7', execution: '9/12/2024', completion: '11/15/2024' },
+            { name: '55 COFFEE', location: 'Ittin - Salalah', scope: 'Civil works', map: 'https://maps.app.goo.gl/USLeFKQUXjVRsWPz6', execution: '10/24/2024', completion: '12/25/2024' },
+            { name: 'VIAN CROISSANTS', location: 'Al Khoud Square', scope: 'Furniture & joinery', map: 'https://maps.app.goo.gl/fxmrHDbhQxyHC5P5A', execution: '12/24/2024', completion: '1/18/2025' },
+            { name: 'JELAL EFENDI RESTAURANT', location: 'Mawaleh, Seeb', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/nijRiuoAsoJZXajm6', execution: '1/20/2025', completion: '4/20/2025' },
+            { name: 'MUSCAFE', location: 'Bousher', scope: 'Fitout, MEP & furniture', map: 'https://maps.app.goo.gl/qm6yaVa26LyxZNMx7', execution: '5/5/2024', completion: '6/25/2025' },
+            { name: 'CAIKA', location: 'Salalah', scope: 'Civil works', map: 'https://maps.app.goo.gl/huw3qxLgQxfs8ctm8', execution: '7/19/2025', completion: '7/20/2025' },
+            { name: 'SIGN CAFE', location: 'Al Amerat', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/PmpKLXLC5PmMHhN36', execution: '12/15/2025', completion: '1/25/2026' },
+            { name: 'ITALIAN BARRISTA CAFE', location: 'Rustaq', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/YprxAL2ZKWHce9xM9', execution: '7/15/2025', completion: '9/30/2025' },
+            { name: 'ITALIAN BARRISTA CAFE', location: 'Al Khuwair', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/4NV73MH8VmhVrNTj8', execution: '11/1/2025', completion: '2/28/2026' },
+            { name: 'CHAII', location: 'Grand Flora - Salalah', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/YMvch3L67xRQiDEK6', execution: '2/21/2026', completion: '3/25/2026' },
+            { name: 'CHAII', location: 'Sahalnoot - Salalah', scope: 'Fitout, MEP & signage', map: 'https://maps.app.goo.gl/txeYiHPjRjhTctcC9', execution: '2/21/2026', completion: '3/25/2026' },
+            { name: 'CHAII', location: 'Saada - Salalah', scope: 'Fitout, MEP & signage', map: 'https://maps.app.goo.gl/dgFo3po6Y1oxxNuc7', execution: '2/21/2026', completion: '3/25/2026' },
+            { name: 'BURGER GELLATTO', location: 'Al Khuwair', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/AxVdNb5rXdnyQujK6', execution: null, completion: null },
+            { name: 'LOREVA (VENIER COFFEE)', location: 'Grand Mall - Salalah', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/v2rVSbw6qVBqnZr38', execution: '5/19/2025', completion: '7/18/2025' },
+            { name: 'TEA TOWN', location: 'Azaiba (Near Airport)', scope: 'Furniture', map: 'https://maps.app.goo.gl/Fwd9MajLq8sDxVeU6', execution: '9/23/2025', completion: '10/4/2025' },
+            { name: '20UR COFFEE', location: 'Sur', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/qghZbaQ6hcbyoq6R8', execution: '12/1/2024', completion: '1/31/2025' },
+          ],
+        },
+        {
+          key: 'hospitality',
+          eyebrow: 'Hotels & arrivals',
+          title: 'Hospitality',
+          description: 'Spaces that welcome guests around the clock: illuminated façades, calm lobbies, and coherent signage systems. We align architectural finishes with brand standards so arrivals feel intentional and easy to navigate.',
+          cardTag: 'Hospitality',
+          rows: [
+            { name: '4 POINTS BY SHERATON', location: 'Duqm Free Zone', scope: 'Fitout & joinery', map: 'https://maps.app.goo.gl/EoAbw1GK8vh25Y1Z7', execution: '8/1/2025', completion: '10/10/2025' },
+            { name: '4 POINTS BY SHERATON', location: 'Duqm Free Zone', scope: 'Furniture', map: 'https://maps.app.goo.gl/EoAbw1GK8vh25Y1Z7', execution: '10/25/2025', completion: '2/25/2026' },
+            { name: 'DAMAS HOTEL', location: 'Ghubra, Muscat', scope: 'Signage', map: 'https://maps.app.goo.gl/TApJz3Qp8mZkQcdN9', execution: null, completion: null },
+            { name: 'KIRIAD HOTEL', location: 'Salalah', scope: '—', map: 'https://maps.app.goo.gl/4a1MiYkZsFmT7AuV9', execution: null, completion: null },
+          ],
+        },
+        {
+          key: 'retail',
+          eyebrow: 'Boutiques & mall units',
+          title: 'Retail & luxury',
+          description: 'Precision joinery and lighting for retail storytelling—vitrines, cash wraps, watch galleries, and mall kiosks engineered for product focus and durability in climate-controlled settings.',
+          cardTag: 'Retail',
+          rows: [
+            { name: 'WATCHESCO', location: 'Qurum, Muscat', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/AwyVhXLQGuejP11f6', execution: '7/15/2025', completion: '9/30/2025' },
+            { name: 'AL RIFAI ROASTERY', location: 'Mall of Oman - Muscat', scope: 'Fitout & joinery', map: 'https://maps.app.goo.gl/pfVF5L6mAoDnBwJG8', execution: '12/24/2024', completion: '1/31/2025' },
+            { name: 'BARIQ AL KHALEEJ', location: 'Wadi Al Kabir', scope: 'Kiosk', map: null, execution: null, completion: null },
+            { name: 'BINT AL SHEIKH', location: 'Muscat Exhibition Centre', scope: 'Kiosk', map: null, execution: '2/20/2026', completion: '2/25/2026' },
+            { name: 'PRIVATE CLIENT', location: 'Grand Mall - Muscat', scope: 'Joinery & furniture', map: null, execution: '3/5/2025', completion: '4/12/2025' },
+          ],
+        },
+        {
+          key: 'culture',
+          eyebrow: 'Public & institutional',
+          title: 'Culture & civic',
+          description: 'Interpretive work and civic interiors that demand meticulous detailing—from archaeological museums to national facilities where finishes must age gracefully under public use.',
+          cardTag: 'Culture & public',
+          rows: [
+            { name: 'BINT AL SHEIKH', location: 'Salalah', scope: 'Fitout & joinery', map: null, execution: '4/3/2024', completion: '4/28/2024' },
+            { name: 'AL BALEED MUSEUM', location: 'Salalah', scope: 'Fit out & joinery', map: 'https://maps.app.goo.gl/kuPviqeKhouWcX4UA', execution: '7/15/2025', completion: '8/5/2025' },
+            { name: 'NATIONAL ENERGY CENTRE', location: 'Sultanate of Oman', scope: 'Fitout, MEP & furniture', map: null, execution: '7/15/2024', completion: '7/25/2024' },
+            { name: 'EXPERIENCE OMAN', location: 'Salalah', scope: 'Design', map: null, execution: null, completion: null },
+          ],
+        },
+        {
+          key: 'corporate',
+          eyebrow: 'Offices, villas & specialised works',
+          title: 'Corporate & residential',
+          description: 'Bespoke commercial cores, private villas, and specialised packages—custom joinery, loose furniture programs, and site coordination under one accountable team through handover.',
+          cardTag: 'Corporate',
+          rows: [
+            { name: 'HAMATH VILLA', location: 'Muscat', scope: 'Fit out & joinery', map: null, execution: '8/24/2023', completion: '12/1/2023' },
+            { name: 'MANCAVE - BAHWAN', location: 'Qurum, Muscat', scope: 'Fitout, MEP & joinery', map: null, execution: '12/25/2023', completion: '2/25/2024' },
+            { name: 'BOAD MUSCAT', location: 'Bousher', scope: 'Custom joinery works & signage', map: 'https://maps.app.goo.gl/EpfHBcGJ3eNmKq3C6', execution: '12/15/2024', completion: '1/25/2025' },
+            { name: 'OMAN OIL', location: 'Muscat', scope: 'Furniture', map: 'https://maps.app.goo.gl/B3jns6Tw1Ewb8QZB6', execution: '5/4/2025', completion: '5/10/2025' },
+            { name: 'OTE (BAHWAN GROUP)', location: 'Jalan Bani Bu Ali', scope: 'Furniture', map: null, execution: '12/24/2025', completion: '1/8/2026' },
+          ],
+        },
+      ];
+
+      function escapeAttr(s) {
+        return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+      }
+
+      function escapeHtml(s) {
+        return String(s)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      const NARRATIVE = {
+        cafe: [
+          'A modern café fit-out designed to create a welcoming and functional environment, combining efficient space planning with high-quality finishes and attention to detail.',
+          'This project reflects a seamless blend of aesthetic design and practical execution, delivering a vibrant café space tailored to enhance customer experience and operational flow.',
+          'Executed with precision, this café showcases refined craftsmanship, custom joinery, and a carefully curated interior that aligns with the client\'s brand identity.',
+          'A thoughtfully designed café environment featuring optimized layouts, durable materials, and elegant finishing, ensuring both visual appeal and long-term performance.',
+          'From concept to completion, this café project highlights our commitment to quality, delivering a stylish and functional space built to meet the demands of a dynamic F&B setting.',
+        ],
+        restaurant: [
+          'A carefully executed restaurant fit-out that balances ambiance, functionality, and durability, creating a space designed to enhance both dining experience and operational efficiency.',
+          'This project showcases a refined dining environment, combining high-quality materials, precise workmanship, and a layout optimized for seamless service flow.',
+          'Designed and delivered to reflect the client\'s brand identity, this restaurant features bespoke finishes, custom elements, and a cohesive interior concept.',
+          'A complete restaurant development executed with attention to detail, incorporating efficient space utilization, durable finishes, and elegant design elements.',
+          'From concept to handover, this restaurant project demonstrates our commitment to precision, delivering a functional and visually engaging space tailored for the F&B industry.',
+        ],
+        damasHotelSignage: {
+          title: 'Damas Hotel — Signage installation',
+          body: 'A high-quality signage solution developed to elevate the visual presence of Damas Hotel, combining refined craftsmanship, durable materials, and precise installation to achieve a strong and lasting brand impression.',
+        },
+        construction: [
+          'A comprehensive construction project executed with precision, ensuring structural integrity, quality materials, and adherence to project timelines from foundation to completion.',
+          'This development reflects our commitment to engineering excellence, delivering a robust and well-planned structure designed for long-term performance and functionality.',
+          'Built with a focus on durability and efficiency, this project demonstrates meticulous planning, skilled execution, and strict quality control at every stage.',
+          'A fully managed construction project showcasing strong structural execution, optimized workflows, and attention to detail in both core construction and finishing.',
+          'From groundwork to final handover, this project highlights our ability to deliver reliable, high-quality building solutions aligned with client requirements and industry standards.',
+        ],
+        retail: [
+          'A complete retail unit fit-out delivered with precision, combining functional layout planning with high-quality finishes to create an engaging customer environment.',
+          'This project showcases a well-executed retail space designed to maximize product visibility, customer flow, and overall shopping experience.',
+          'Developed to reflect brand identity, this retail unit features custom-built elements, durable materials, and a clean, modern finish.',
+          'A thoughtfully designed retail space executed with attention to detail, ensuring efficiency, visual appeal, and long-term performance.',
+          'From concept to completion, this retail project highlights our expertise in delivering practical, high-quality solutions tailored to commercial retail environments.',
+        ],
+      };
+
+      function narrativeSeed(row) {
+        let h = 0;
+        const str = row.name + '|' + row.location + '|' + (row.scope || '');
+        for (let i = 0; i < str.length; i++) h = Math.imul(31, h) + str.charCodeAt(i) | 0;
+        return Math.abs(h);
+      }
+
+      function projectNarrative(row) {
+        const n = row.name.toUpperCase();
+        const s = (row.scope || '').toUpperCase().trim();
+        const seed = narrativeSeed(row);
+
+        if (n.includes('DAMAS')) {
+          const d = NARRATIVE.damasHotelSignage;
+          return '<strong>' + escapeHtml(d.title) + '</strong>' + escapeHtml(d.body);
+        }
+
+        const isStandaloneCivil = s === 'CIVIL WORKS' || s === 'CIVIL WORK';
+        if (isStandaloneCivil || (n.includes('CAIKA') && s.includes('CIVIL'))) {
+          return escapeHtml(NARRATIVE.construction[seed % 5]);
+        }
+
+        if (n.includes('JELAL')) {
+          return escapeHtml(NARRATIVE.restaurant[seed % 5]);
+        }
+
+        if (
+          n.includes('WATCHESCO') ||
+          n.includes('RIFAI') ||
+          n.includes('BARIQ') ||
+          s.includes('KIOSK') ||
+          n.includes('PRIVATE CLIENT') ||
+          n.includes('OMAN OIL') ||
+          n.includes('OTE') ||
+          n.includes('MANCAVE') ||
+          n.includes('BOAD')
+        ) {
+          return escapeHtml(NARRATIVE.retail[seed % 5]);
+        }
+
+        if (
+          n.includes('4 POINTS') ||
+          n.includes('KIRIAD') ||
+          n.includes('NATIONAL ENERGY') ||
+          n.includes('AL BALEED') ||
+          n.includes('EXPERIENCE OMAN') ||
+          n.includes('HAMATH VILLA')
+        ) {
+          return escapeHtml(NARRATIVE.construction[seed % 5]);
+        }
+
+        if (n.includes('BINT AL SHEIKH')) {
+          return escapeHtml(NARRATIVE.retail[seed % 5]);
+        }
+
+        return escapeHtml(NARRATIVE.cafe[seed % 5]);
+      }
+
+      function formatDateCell(v) {
+        if (v === null || v === undefined || v === '' || String(v).toUpperCase() === 'N/A') return '—';
+        return escapeHtml(v);
+      }
+
+      function mapMarkup(row) {
+        const m = row.map;
+        if (m && String(m).toUpperCase() !== 'N/A') {
+          return (
+            '<a class="f-project-map" href="' + escapeAttr(m) + '" target="_blank" rel="noopener noreferrer">Open map</a>'
+          );
+        }
+        return '<span class="f-project-map f-project-map-na">No map link</span>';
+      }
+
+      function cardMarkup(row, cardTag) {
+        const src = imageForProject(row);
+        const alt = escapeAttr(row.name + ' — ' + row.location);
+        const scope = escapeHtml(row.scope);
+        const name = escapeAttr(row.name);
+        const loc = escapeAttr(row.location);
+        const tag = escapeHtml(cardTag);
+        const exec = formatDateCell(row.execution);
+        const comp = formatDateCell(row.completion);
+        return (
+          '<div class="f-project-card">' +
+            '<div class="f-project-img-wrapper">' +
+              '<img src="' + src + '" alt="' + alt + '" loading="lazy">' +
+            '</div>' +
+            '<div class="f-project-info">' +
+              '<p class="f-project-cat">' + tag + '</p>' +
+              '<p class="f-project-name">' + name + '</p>' +
+              '<p class="f-project-loc">' + loc + '</p>' +
+              '<p class="f-project-narrative">' + projectNarrative(row) + '</p>' +
+              '<p class="f-project-scope"><span class="f-project-detail-label">Scope of work</span> ' + scope + '</p>' +
+              '<p class="f-project-dates">' +
+                '<span class="f-project-detail-label">Execution</span> ' + exec +
+                '<span class="f-project-detail-sep">·</span>' +
+                '<span class="f-project-detail-label">Completion</span> ' + comp +
+              '</p>' +
+              '<div class="f-project-map-row"><span class="f-project-detail-label">Map</span> ' + mapMarkup(row) + '</div>' +
+            '</div>' +
+          '</div>'
+        );
+      }
+
+      const root = document.getElementById('portfolioRoot');
+      if (!root) return;
+
+      root.innerHTML = categories.map(function (cat, idx) {
+        var cards = cat.rows.map(function (row) {
+          return cardMarkup(row, cat.cardTag);
+        }).join('');
+        var revealL = idx % 2 === 0 ? 'left' : 'right';
+        var revealR = idx % 2 === 0 ? 'right' : 'left';
+        return (
+          '<section class="f-projects f-projects-category" style="padding-top:4.5rem">' +
+            '<div class="f-projects-header">' +
+              '<div data-reveal="' + revealL + '">' +
+                '<span class="f-label" style="display:block;margin-bottom:1rem">' + escapeHtml(cat.eyebrow) + '</span>' +
+                '<h2>' + escapeHtml(cat.title) + '</h2>' +
+                '<p class="f-category-desc">' + escapeHtml(cat.description) + '</p>' +
+              '</div>' +
+              '<p style="font-size:0.85rem;color:rgba(22,26,29,0.35);max-width:300px;text-align:right" data-reveal="' + revealR + '">Drag horizontally to scroll this category.</p>' +
+            '</div>' +
+            '<div class="f-projects-scroll">' + cards + '</div>' +
+          '</section>'
+        );
+      }).join('');
+    })();
+  </script>
+  <script src="../reusable_code/footer.js"></script>
+</body>
+</html>

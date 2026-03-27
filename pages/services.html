@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FARJAR Services — Fitout, joinery, MEP, signage, furniture and complete interior solutions in Oman.">
+  <title>Services — FARJAR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{dark:'#161A1D',beige:'#DCD7D4',brown:'#99380B',orange:'#FF8402'},fontFamily:{inter:['Inter','sans-serif']}}}}</script>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" type="image/png" href="../assets/images/logo/farjar-logo-stacked.png">
+</head>
+<body class="font-inter">
+  <style>
+    .f-quote-modal-backdrop{
+      position:fixed;inset:0;z-index:12000;
+      background:rgba(22,26,29,0.7);
+      backdrop-filter:blur(6px);
+      display:none;align-items:center;justify-content:center;
+      padding:1rem;
+    }
+    .f-quote-modal-backdrop.open{display:flex;}
+    .f-quote-modal{
+      width:min(940px,100%);
+      background:#fff;
+      border:1px solid rgba(22,26,29,0.08);
+      display:grid;grid-template-columns:1.2fr 0.8fr;
+      overflow:hidden;
+    }
+    .f-quote-modal-left{padding:2rem;}
+    .f-quote-modal-right{
+      padding:2rem;background:rgba(255,132,2,0.06);
+      border-left:1px solid rgba(22,26,29,0.08);
+      display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+      gap:1rem;
+    }
+    .f-quote-close{
+      position:absolute;top:10px;right:10px;
+      width:36px;height:36px;border:1px solid rgba(22,26,29,0.15);
+      display:flex;align-items:center;justify-content:center;
+      background:#fff;color:#161A1D;font-size:1rem;
+    }
+    .f-quote-form{display:flex;flex-direction:column;gap:0.85rem;}
+    .f-quote-form input,.f-quote-form textarea,.f-quote-form select{
+      border:1px solid rgba(22,26,29,0.18);
+      padding:0.75rem 0.85rem;font-size:0.9rem;
+      color:#161A1D;background:#fff;
+    }
+    .f-quote-row{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;}
+    .f-quote-btn{
+      padding:0.9rem 1.2rem;background:#FF8402;color:#161A1D;
+      font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:0.78rem;
+      border:0;
+    }
+    .f-quote-contact-link{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:0.75rem 1rem;border:1px solid rgba(22,26,29,0.2);
+      color:#161A1D;font-size:0.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+    }
+    @media (max-width:900px){
+      .f-quote-modal{grid-template-columns:1fr;}
+      .f-quote-modal-right{border-left:none;border-top:1px solid rgba(22,26,29,0.08);}
+    }
+    @media (max-width:640px){
+      .f-quote-row{grid-template-columns:1fr;}
+    }
+  </style>
+
+  <!-- Page Hero -->
+  <section class="f-page-hero">
+    <div class="f-page-hero-content">
+      <span class="f-label">What We Do</span>
+      <h1>Our<br>Services</h1>
+      <p>Comprehensive construction and interior solutions delivered with precision and creative excellence.</p>
+    </div>
+  </section>
+
+  <!-- Three.js + Intro -->
+  <section style="display:grid;grid-template-columns:1fr 1fr;min-height:80vh">
+    <div class="f-three-wrap" id="servicesThree" style="min-height:60vh;background:var(--dark)"></div>
+    <div style="padding:6rem 4rem;display:flex;flex-direction:column;justify-content:center">
+      <span style="font-size:0.7rem;letter-spacing:5px;text-transform:uppercase;color:var(--orange);display:block;margin-bottom:1.5rem" data-reveal="up">End-to-End Solutions</span>
+      <h2 style="font-size:clamp(2rem,4vw,3.5rem);font-weight:800;letter-spacing:-1px;margin-bottom:2rem;color:#99380B" data-reveal="up">From Vision<br>to Reality</h2>
+      <p style="font-size:1rem;color:#161A1D;line-height:1.8;max-width:450px" data-reveal="up">FARJAR offers a full range of construction and interior design services. Whether you need a complete commercial fitout or specialized joinery work, our expert team delivers results that exceed expectations.</p>
+      <button id="fOpenQuoteModal" type="button" style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:2rem;padding:1rem 2rem;font-size:0.8rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;background:var(--orange);color:var(--dark);align-self:flex-start;transition:all 0.3s ease;border:none;" data-reveal="up" onmouseover="this.style.background='#99380B';this.style.color='var(--beige)'" onmouseout="this.style.background='var(--orange)';this.style.color='var(--dark)'">Get a Quote →</button>
+    </div>
+  </section>
+
+  <div class="f-quote-modal-backdrop" id="fQuoteModalBackdrop" aria-hidden="true">
+    <div class="f-quote-modal" role="dialog" aria-modal="true" aria-labelledby="fQuoteTitle" style="position:relative">
+      <button class="f-quote-close" id="fQuoteClose" aria-label="Close quote form">✕</button>
+      <div class="f-quote-modal-left">
+        <h3 id="fQuoteTitle" style="font-size:1.4rem;font-weight:800;letter-spacing:-0.5px;color:#99380B;margin-bottom:0.4rem;">Get a Quote</h3>
+        <p style="font-size:0.9rem;color:rgba(22,26,29,0.7);margin-bottom:1rem;">Fill the form and we can continue on WhatsApp instantly.</p>
+        <form id="fQuoteForm" class="f-quote-form">
+          <div class="f-quote-row">
+            <input type="text" id="fQuoteName" placeholder="Full Name" required>
+            <input type="tel" id="fQuotePhone" placeholder="Phone Number" required>
+          </div>
+          <input type="email" id="fQuoteEmail" placeholder="Email (optional)">
+          <select id="fQuoteService" required>
+            <option value="">Select Service</option>
+            <option>Interior Design Solutions</option>
+            <option>Space Planning & 3D Visualization</option>
+            <option>Civil, Structural & Steel Works</option>
+            <option>MEP Services</option>
+            <option>Interior Fit-Out & Finishing Works</option>
+            <option>Bespoke Joinery & Carpentry</option>
+            <option>Custom Furniture Solutions</option>
+            <option>Retail & Display Fixtures Manufacturing</option>
+            <option>F&B and Office Fit-Out Specialists</option>
+            <option>Project Management & Site Supervision</option>
+            <option>Turnkey Interior Solutions</option>
+            <option>Renovation & Refurbishment</option>
+          </select>
+          <textarea id="fQuoteMsg" rows="4" placeholder="Tell us your requirement"></textarea>
+          <button class="f-quote-btn" type="submit">Send via WhatsApp</button>
+        </form>
+      </div>
+      <div class="f-quote-modal-right">
+        <h4 style="font-size:1rem;font-weight:800;color:#161A1D;">Scan WhatsApp QR</h4>
+        <img
+          src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https%3A%2F%2Fapi.whatsapp.com%2Fsend%3Fphone%3D96893930050"
+          alt="WhatsApp QR"
+          width="180"
+          height="180"
+          style="border:1px solid rgba(22,26,29,0.12);background:#fff;padding:6px"
+        >
+        <a class="f-quote-btn" href="https://api.whatsapp.com/send?phone=96893930050" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">Open WhatsApp</a>
+        <a class="f-quote-contact-link" href="contact.html">Or Go to Contact Page</a>
+        <p style="font-size:0.76rem;color:rgba(22,26,29,0.55);">You will be redirected to our WhatsApp number.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Services Columns -->
+  <section class="f-services f-services--card-grid">
+    <div class="f-services-header">
+      <div>
+        <span style="font-size:0.7rem;letter-spacing:5px;text-transform:uppercase;color:var(--orange);display:block;margin-bottom:1rem" data-reveal="up">Services</span>
+        <h2 data-reveal="up">Services<br>We Provide</h2>
+        <p data-reveal="up" style="margin-top:1rem;">Every project is handled with meticulous attention to detail and a commitment to timely delivery.</p>
+      </div>
+    </div>
+    <div class="f-service-stack">
+      <div class="f-service-item">
+        <img src="../assets/images/projects/JELAL EFENDI RESTAURANT/JELAL EFENDI RESTAURANT 01.png" alt="Interior design — Jelal Efendi" loading="lazy">
+        <div class="f-service-item-inner">
+          <h3 class="f-service-title">Interior Design Solutions </h3>
+          <p class="f-service-desc">Creative and functional interior design tailored to commercial and residential environments.</p>
+        </div>
+      </div>
+      <div class="f-service-item">
+        <img src="../assets/images/projects/VIAN CROISSANTS/VIAN CROISSANTS 01.png" alt="Space planning — Vian Croissants" loading="lazy">
+        <div class="f-service-item-inner">
+          <h3 class="f-service-title"> Space Planning & 3D Visualization </h3>
+          <p class="f-service-desc">Efficient space planning supported by detailed 3D concepts to help clients visualize the final outcome. </p>
+        </div>
+      </div>
+      <div class="f-service-item">
+        <img src="../assets/images/projects/Haffa/Haffa01.jpeg" alt="Structural & civil — Haffa Walk Salalah" loading="lazy">
+        <div class="f-service-item-inner">
+          <h3 class="f-service-title"> Civil, Structural & Steel Works </h3>
+          <p class="f-service-desc"> Execution of civil construction, structural works, and steel fabrication with a strong focus on precision 
+            and durability. </p>
+        </div>
+      </div>
+      <div class="f-service-item">
+        <img src="../assets/images/projects/Myriad 55/55 MYRIAD HOTEL -RUSAYL (01).png" alt="MEP — 55 Coffee Myriad Rusayl" loading="lazy">
+        <div class="f-service-item-inner">
+          <h3 class="f-service-title">MEP Services (Mechanical, Electrical & Plumbing) </h3>
+          <p class="f-service-desc">Complete MEP solutions designed and executed to meet industry standards and project specifications.</p>
+        </div>
+      </div>
+      <div class="f-service-item">
+        <img src="../assets/images/projects/Alrifai/SELECTED%202.DNG" alt="Interior fit-out — Al Rifai" loading="lazy">
+        <div class="f-service-item-inner">
+          <h3 class="f-service-title">Interior Fit-Out & Finishing Works  </h3>
+          <p class="f-service-desc">High-quality interior fit-out services including ceiling, flooring, wall finishes, and detailed finishing 
+            works. </p>
+        </div>
+      </div>
+      <div class="f-service-item">
+        <img src="../assets/images/projects/Watchesco/Watchesco 01.png" alt="Joinery — Watchesco" loading="lazy">
+        <div class="f-service-item-inner">
+          <h3 class="f-service-title">Bespoke Joinery & Carpentry Works  </h3>
+          <p class="f-service-desc">Custom joinery and carpentry solutions crafted with precision to match design and functional 
+            requirements.</p>
+        </div>
+      </div>
+      <div class="f-service-item">
+        <img src="../assets/images/projects/Tea Town/Tea Town 01.png" alt="Furniture — Tea Town" loading="lazy">
+        <div class="f-service-item-inner">
+          <h3 class="f-service-title">Custom Furniture Solutions  </h3>
+          <p class="f-service-desc">Design and manufacturing of bespoke furniture for commercial spaces, hospitality projects, and 
+            residential interiors.</p>
+        </div>
+      </div>
+      <div class="f-service-item">
+        <img src="../assets/images/projects/55 Gardenes Mall/55 GARDENS MALL - SALALAH (01).png" alt="Retail — 55 Gardens Mall Salalah" loading="lazy">
+        <div class="f-service-item-inner">
+          <h3 class="f-service-title">Retail & Display Fixtures Manufacturing </h3>
+          <p class="f-service-desc">Production of customized retail displays, counters, shelving systems, and brand-focused display units.</p>
+        </div>
+      </div>
+      <div class="f-service-item">
+        <img src="../assets/images/projects/55 Azaiba/55 Azaiba 01.jpeg" alt="F&B fit-out — 55 Azaiba" loading="lazy">
+        <div class="f-service-item-inner">
+          <h3 class="f-service-title">F&B and Office Fit-Out Specialists </h3>
+          <p class="f-service-desc">Specialized execution of cafés, restaurants, and corporate office interiors with a focus on efficiency and 
+            high-quality finishing. </p>
+        </div>
+      </div>
+      <div class="f-service-item">
+        <img src="../assets/images/projects/Muscafe/IMG_0242.heic" alt="Project delivery — Muscafe Bousher" loading="lazy">
+        <div class="f-service-item-inner">
+          <h3 class="f-service-title">Project Management & Site Supervision</h3>
+          <p class="f-service-desc">Professional project coordination, planning, and on-site supervision to ensure timely and smooth project 
+            delivery.</p>
+        </div>
+      </div>
+      <div class="f-service-item">
+        <img src="../assets/images/projects/AL BALEED MUSUEM/AL BALEED MUSUEM 01.jpeg" alt="Institutional — Al Baleed Museum" loading="lazy">
+        <div class="f-service-item-inner">
+          <h3 class="f-service-title"> Turnkey Interior Solutions </h3>
+          <p class="f-service-desc">End-to-end project execution—from concept and design to final handover—under a single point of 
+            responsibility.</p>
+        </div>
+      </div>
+      <div class="f-service-item">
+        <img src="../assets/images/projects/UR 20/UR 20 (01).png" alt="Commercial — UR 20" loading="lazy">
+        <div class="f-service-item-inner">
+          <h3 class="f-service-title"> Renovation & Refurbishment Works  </h3>
+          <p class="f-service-desc">Upgrade and transformation of existing spaces with minimal disruption and maximum quality.</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="f-cta">
+    <h2 data-reveal="up">Ready to Start<br>Your <span style="color:var(--orange)">Project?</span></h2>
+    <p data-reveal="up">Get in touch to discuss your requirements and receive a tailored proposal.</p>
+    <a href="https://api.whatsapp.com/send?phone=96893930050" target="_blank" rel="noopener noreferrer" data-reveal="up"><span>Contact Us →</span></a>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>gsap.registerPlugin(ScrollTrigger);</script>
+  <script src="../reusable_code/loader.js"></script>
+  <script src="../reusable_code/nav.js"></script>
+  <script src="../js/three-scene.js"></script>
+  <script src="../js/animations.js"></script>
+  <script>document.addEventListener('DOMContentLoaded',()=>{createThreeScene('servicesThree',{geometryType:'torus',particleCount:600})});</script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const openBtn = document.getElementById('fOpenQuoteModal');
+      const backdrop = document.getElementById('fQuoteModalBackdrop');
+      const closeBtn = document.getElementById('fQuoteClose');
+      const form = document.getElementById('fQuoteForm');
+      const WHATSAPP_NUMBER = '96893930050';
+
+      function openModal() {
+        backdrop.classList.add('open');
+        backdrop.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        backdrop.classList.remove('open');
+        backdrop.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+
+      openBtn?.addEventListener('click', openModal);
+      closeBtn?.addEventListener('click', closeModal);
+      backdrop?.addEventListener('click', (e) => {
+        if (e.target === backdrop) closeModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && backdrop.classList.contains('open')) closeModal();
+      });
+
+      form?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('fQuoteName').value.trim();
+        const phone = document.getElementById('fQuotePhone').value.trim();
+        const email = document.getElementById('fQuoteEmail').value.trim();
+        const service = document.getElementById('fQuoteService').value;
+        const message = document.getElementById('fQuoteMsg').value.trim();
+
+        const text = [
+          'Hello FARJAR, I need a quote.',
+          `Name: ${name}`,
+          `Phone: ${phone}`,
+          email ? `Email: ${email}` : null,
+          `Service: ${service}`,
+          message ? `Requirement: ${message}` : null
+        ].filter(Boolean).join('\n');
+
+        const url = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(text)}`;
+        window.open(url, '_blank', 'noopener,noreferrer');
+      });
+    });
+  </script>
+  <script src="../reusable_code/footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FARJAR Gallery — Browse our collection of interior design and construction project photographs across Oman.">
+  <title>Gallery — FARJAR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{dark:'#161A1D',beige:'#DCD7D4',brown:'#99380B',orange:'#FF8402'},fontFamily:{inter:['Inter','sans-serif']}}}}</script>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" type="image/png" href="../assets/images/logo/farjar-logo-stacked.png">
+</head>
+<body class="font-inter">
+
+  <!-- Fullscreen Gallery View -->
+  <div class="f-gallery-view" id="fGalleryView">
+    <button class="f-gallery-view-close" id="fGalClose" aria-label="Close">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <button class="f-gallery-view-nav prev" id="fGalPrev" aria-label="Previous">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <img id="fGalleryImg" src="" alt="Gallery Preview">
+    <button class="f-gallery-view-nav next" id="fGalNext" aria-label="Next">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+  </div>
+
+  <!-- Page Hero -->
+  <section class="f-page-hero">
+    <div class="f-page-hero-content">
+      <span class="f-label">Visual Portfolio</span>
+      <h1>Gallery</h1>
+      <p>Click any image for a fullscreen immersive preview with smooth zoom transitions.</p>
+    </div>
+  </section>
+
+  <!-- Gallery Grid — Motion Zoom (adapted from apple-clone-image-motion) -->
+  <section class="f-gallery">
+    <div class="f-gallery-header">
+      <h2 data-reveal="up">Our Work,<br>Up Close</h2>
+    </div>
+    <div class="f-gallery-grid" data-stagger>
+      <div class="f-gal-item">
+        <img src="../assets/images/projects/JELAL EFENDI RESTAURANT/JELAL EFENDI RESTAURANT 01.png" alt="Jelal Efendi" loading="lazy">
+        <span class="f-gal-label">Jelal Efendi Restaurant</span>
+        <div class="f-gal-zoom-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg></div>
+      </div>
+      <div class="f-gal-item">
+        <img src="../assets/images/projects/Myriad 55/55 MYRIAD HOTEL -RUSAYL (01).png" alt="55 Myriad" loading="lazy">
+        <span class="f-gal-label">55 Myriad Hotel</span>
+        <div class="f-gal-zoom-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg></div>
+      </div>
+      <div class="f-gal-item">
+        <img src="../assets/images/projects/VIAN CROISSANTS/VIAN CROISSANTS 01.png" alt="Vian Croissants" loading="lazy">
+        <span class="f-gal-label">Vian Croissants</span>
+        <div class="f-gal-zoom-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg></div>
+      </div>
+      <div class="f-gal-item">
+        <img src="../assets/images/projects/AL BALEED MUSUEM/AL BALEED MUSUEM 01.jpeg" alt="Al Baleed Museum" loading="lazy">
+        <span class="f-gal-label">Al Baleed Museum</span>
+        <div class="f-gal-zoom-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg></div>
+      </div>
+      <div class="f-gal-item">
+        <img src="../assets/images/projects/Damas Hotel/Damas Hotel 01.png" alt="Damas Hotel" loading="lazy">
+        <span class="f-gal-label">Damas Hotel</span>
+        <div class="f-gal-zoom-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg></div>
+      </div>
+      <div class="f-gal-item">
+        <img src="../assets/images/projects/CAIKA CAFE SALALA/CAIKA CAFE SALALA 01.png" alt="Caika Cafe" loading="lazy">
+        <span class="f-gal-label">Caika Cafe</span>
+        <div class="f-gal-zoom-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg></div>
+      </div>
+      <div class="f-gal-item">
+        <img src="../assets/images/projects/55 Azaiba/55 Azaiba 01.jpeg" alt="55 Coffee Azaiba" loading="lazy">
+        <span class="f-gal-label">55 Coffee — Azaiba</span>
+        <div class="f-gal-zoom-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg></div>
+      </div>
+      <div class="f-gal-item">
+        <img src="../assets/images/projects/Tea Town/Tea Town 01.png" alt="Tea Town" loading="lazy">
+        <span class="f-gal-label">Tea Town</span>
+        <div class="f-gal-zoom-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg></div>
+      </div>
+      <div class="f-gal-item">
+        <img src="../assets/images/projects/UR 20/UR 20 (01).png" alt="UR 20" loading="lazy">
+        <span class="f-gal-label">UR 20</span>
+        <div class="f-gal-zoom-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg></div>
+      </div>
+      <div class="f-gal-item">
+        <img src="../assets/images/projects/Watchesco/Watchesco 01.png" alt="Watchesco" loading="lazy">
+        <span class="f-gal-label">Watchesco</span>
+        <div class="f-gal-zoom-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg></div>
+      </div>
+      <div class="f-gal-item">
+        <img src="../assets/images/projects/55 Mawaleh/55 Mawaleh 01.jpeg" alt="55 Mawaleh" loading="lazy">
+        <span class="f-gal-label">55 Coffee — Mawaleh</span>
+        <div class="f-gal-zoom-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg></div>
+      </div>
+      <div class="f-gal-item">
+        <img src="../assets/images/projects/55 Gardenes Mall/55 GARDENS MALL - SALALAH (01).png" alt="55 Gardens Mall" loading="lazy">
+        <span class="f-gal-label">55 Gardens Mall</span>
+        <div class="f-gal-zoom-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="f-cta">
+    <h2 data-reveal="up">Like What<br>You <span style="color:var(--orange)">See?</span></h2>
+    <p data-reveal="up">Let FARJAR design and build a space that tells your brand's story.</p>
+    <a href="https://api.whatsapp.com/send?phone=96893930050" target="_blank" rel="noopener noreferrer" data-reveal="up"><span>Start Your Project →</span></a>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>gsap.registerPlugin(ScrollTrigger);</script>
+  <script src="../reusable_code/loader.js"></script>
+  <script src="../reusable_code/nav.js"></script>
+  <script src="../js/animations.js"></script>
+  <script src="../reusable_code/footer.js"></script>
+</body>
+</html>

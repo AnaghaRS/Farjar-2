@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact FARJAR — Get in touch for inquiries about interior design and construction services in Oman.">
+  <title>Contact — FARJAR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{dark:'#161A1D',beige:'#DCD7D4',brown:'#99380B',orange:'#FF8402'},fontFamily:{inter:['Inter','sans-serif']}}}}</script>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" type="image/png" href="../assets/images/logo/farjar-logo-stacked.png">
+</head>
+<body class="font-inter">
+
+  <!-- Page Hero -->
+  <section class="f-page-hero">
+    <div class="f-page-hero-content">
+      <span class="f-label">Get In Touch</span>
+      <h1>Contact<br>Us</h1>
+      <p>Ready to transform your space? We'd love to hear from you.</p>
+    </div>
+  </section>
+
+  <!-- Contact Split — Form + Styled Map -->
+  <section class="f-contact">
+    <div class="f-contact-form-side">
+      <span style="font-size:0.7rem;letter-spacing:5px;text-transform:uppercase;color:var(--orange);display:block;margin-bottom:1rem" data-reveal="up">Send a Message</span>
+      <h2 data-reveal="up">Let's Discuss<br>Your Project</h2>
+
+      <form class="f-contact-form" id="fContactForm" data-reveal="up">
+        <div class="f-form-row">
+          <div class="f-form-field">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="Your name" required>
+          </div>
+          <div class="f-form-field">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="you@example.com" required>
+          </div>
+        </div>
+        <div class="f-form-field">
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" placeholder="+968 9393 0050">
+        </div>
+        <div class="f-form-field">
+          <label for="message">Message</label>
+          <textarea id="message" rows="4" placeholder="Tell us about your project..." required></textarea>
+        </div>
+        <button type="submit" class="f-form-submit">Send Message →</button>
+      </form>
+
+      <div id="fFormSuccess" style="display:none;padding:3rem 0;text-align:center">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" style="margin:0 auto 1rem"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <h3 style="font-size:1.8rem;font-weight:800;margin-bottom:0.5rem">Message Sent!</h3>
+        <p style="color:rgba(22,26,29,0.5)">Thank you for reaching out. Our team will respond within 24 hours.</p>
+      </div>
+    </div>
+
+    <div class="f-contact-map-side">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d118109.02752954753!2d58.38826707285048!3d23.614328!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e91fd2fb8ece04f%3A0x8e7345a5cf56d6d0!2sMuscat%2C%20Oman!5e0!3m2!1sen!2sin!4v1679645892345!5m2!1sen!2sin"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        title="FARJAR Location — Muscat, Oman">
+      </iframe>
+      <div class="f-contact-map-overlay">
+        <h4>FARJAR HQ</h4>
+        <p>Building no 164, way 3305
+          Dohat Al Adab street, Al Khuwair st
+          Muscat, Oman</p>
+        <p><span class="f-orange">Phone:</span> +968 9393 0050</p>
+        <p><span class="f-orange">Email:</span> connect@farjarinteriors.com</p>
+        <p style="font-size:0.75rem;margin-top:0.5rem;color:rgba(22,26,29,0.3)">Sun–Thu, 9am – 6pm</p>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>gsap.registerPlugin(ScrollTrigger);</script>
+  <script src="../reusable_code/loader.js"></script>
+  <script src="../reusable_code/nav.js"></script>
+  <script src="../js/animations.js"></script>
+  <script>
+    document.getElementById('fContactForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const WHATSAPP_NUMBER = '96893930050';
+      const name = document.getElementById('name')?.value?.trim() || '';
+      const email = document.getElementById('email')?.value?.trim() || '';
+      const phone = document.getElementById('phone')?.value?.trim() || '';
+      const message = document.getElementById('message')?.value?.trim() || '';
+
+      const text = [
+        'Hello FARJAR, I would like to contact you / get a quote.',
+        name ? `Name: ${name}` : null,
+        email ? `Email: ${email}` : null,
+        phone ? `Phone: ${phone}` : null,
+        message ? `Message: ${message}` : null
+      ].filter(Boolean).join('\n');
+
+      const url = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(text)}`;
+      window.open(url, '_blank', 'noopener,noreferrer');
+    });
+  </script>
+  <script src="../reusable_code/footer.js"></script>
+</body>
+</html>
