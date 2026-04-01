@@ -69,7 +69,7 @@ input,textarea{font-family:inherit;outline:none}
   transition:all 0.4s ease;
 }
 .f-navbar-logo img{
-  height:46px;
+  height:68px;
   object-fit:contain;
   filter:drop-shadow(0 2px 8px rgba(22,26,29,0.1));
 }
@@ -205,11 +205,14 @@ input,textarea{font-family:inherit;outline:none}
 }
 .f-hero-title{
   font-size:clamp(2.5rem,4.5vw,4.5rem);font-weight:800;
-  line-height:1;letter-spacing:-1.5px;
+  /* >1 so descenders aren’t clipped inside overflow:hidden masks during the reveal */
+  line-height:1.12;letter-spacing:-1.5px;
   color:#99380B;
 }
 .f-hero-title span{
   display:block;overflow:hidden;
+  /* Extra room inside the mask for g, p, y until JS sets overflow:visible */
+  padding-bottom:0.08em;
 }
 .f-hero-title span em{
   display:inline-block;font-style:normal;
@@ -393,9 +396,12 @@ input,textarea{font-family:inherit;outline:none}
   background:var(--orange);border-color:var(--orange);color:#fff;
 }
 .f-service-dots{
-  display:flex;flex-wrap:wrap;gap:0.45rem;align-items:center;
+  display:flex;flex-wrap:nowrap;gap:0.45rem;align-items:center;
   justify-content:center;
   max-width:min(100%,640px);
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  padding:0.15rem 0;
 }
 .f-service-dot{
   min-width:34px;height:34px;padding:0 0.5rem;border-radius:999px;
@@ -416,6 +422,17 @@ input,textarea{font-family:inherit;outline:none}
   color:var(--dark);
   border-color:var(--orange);
   box-shadow:0 8px 20px rgba(255,132,2,0.25);
+}
+.f-service-dot--ellipsis{
+  min-width:28px;padding:0 0.35rem;
+  font-size:0.95rem;letter-spacing:0;
+  color:rgba(22,26,29,0.45);
+  background:rgba(22,26,29,0.04);
+}
+.f-service-dot--ellipsis:hover{
+  color:rgba(22,26,29,0.85);
+  background:rgba(22,26,29,0.08);
+  border-color:rgba(22,26,29,0.2);
 }
 .f-service-item{
   position:relative;height:62vh;overflow:hidden;
@@ -688,6 +705,9 @@ input,textarea{font-family:inherit;outline:none}
   max-width:42rem;line-height:1.75;margin-top:1rem;
 }
 .f-projects-category{padding-bottom:1rem}
+/* Projects page: pagination under each category (reuses .f-service-slider-nav) */
+.f-projects-slider-stack{width:100%}
+.f-projects-slider-nav{margin-top:1.75rem;padding-bottom:0.25rem}
 
 /* === TEAM — Interactive Reveal === */
 .f-team{
@@ -975,6 +995,15 @@ input,textarea{font-family:inherit;outline:none}
 .f-contact-detail-row--single{align-items:center}
 .f-contact-detail-row--single svg{margin-top:0}
 .f-contact-details .f-contact-address{display:block;line-height:1.65}
+.f-contact-details .f-footer-social a{
+  border-color:rgba(22,26,29,0.12);
+  color:#161A1D;
+}
+.f-contact-details .f-footer-social a:hover{
+  background:var(--orange);
+  border-color:var(--orange);
+  color:var(--dark);
+}
 
 /* === FOOTER — Minimal === */
 .f-footer{
@@ -987,7 +1016,7 @@ input,textarea{font-family:inherit;outline:none}
   display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
   gap:3rem;margin-bottom:3rem;
 }
-.f-footer-brand img{height:50px;margin-bottom:1.25rem}
+.f-footer-brand img{height:72px;margin-bottom:1.25rem}
 .f-footer-brand p{font-size:0.85rem;color:rgba(220,215,212,0.4);line-height:1.7;max-width:300px}
 .f-footer-col h5{
   font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;

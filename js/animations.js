@@ -8,11 +8,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ---- Hero Title Stagger ---- */
   const heroWords = document.querySelectorAll('.f-hero-title span em');
+  const heroTitleLines = document.querySelectorAll('.f-hero-title span');
   if (heroWords.length) {
-    gsap.to(heroWords, {
-      y: 0, duration: 1.2, ease: 'power4.out',
-      stagger: 0.12, delay: 2.2,
-    });
+    gsap.timeline({ delay: 2.2 })
+      .to(heroWords, {
+        y: 0, duration: 1.2, ease: 'power4.out',
+        stagger: 0.12,
+      })
+      .call(() => {
+        heroTitleLines.forEach((line) => { line.style.overflow = 'visible'; });
+      });
   }
 
   const heroTag = document.querySelector('.f-hero-tag');
@@ -246,11 +251,57 @@ document.addEventListener('DOMContentLoaded', () => {
     serviceSlider.style.left = '0px';
   }
 
-  function syncServiceDots() {
-    if (!serviceDotsContainer) return;
-    serviceDotsContainer.querySelectorAll('.f-service-dot').forEach((dot, i) => {
-      dot.classList.toggle('active', i === serviceIndex);
-    });
+  const SERVICE_DOT_WINDOW = 5;
+
+  function renderServiceDots() {
+    if (!serviceDotsContainer || !serviceItems.length) return;
+    const n = serviceItems.length;
+    serviceDotsContainer.innerHTML = '';
+    const start =
+      n <= SERVICE_DOT_WINDOW
+        ? 0
+        : Math.min(Math.max(serviceIndex - 2, 0), n - SERVICE_DOT_WINDOW);
+    const count = Math.min(SERVICE_DOT_WINDOW, n);
+
+    function appendEllipsis(direction) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'f-service-dot f-service-dot--ellipsis';
+      btn.textContent = '\u2026';
+      if (direction === 'left') {
+        btn.setAttribute('aria-label', 'Earlier slides');
+        btn.addEventListener('click', () => {
+          goToService(start - 1);
+          scheduleServiceAutoplay();
+        });
+      } else {
+        btn.setAttribute('aria-label', 'Later slides');
+        btn.addEventListener('click', () => {
+          goToService(start + count);
+          scheduleServiceAutoplay();
+        });
+      }
+      serviceDotsContainer.appendChild(btn);
+    }
+
+    if (n > SERVICE_DOT_WINDOW && start > 0) appendEllipsis('left');
+
+    for (let i = 0; i < count; i++) {
+      const idx = start + i;
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'f-service-dot' + (idx === serviceIndex ? ' active' : '');
+      btn.dataset.index = String(idx);
+      btn.setAttribute('aria-label', 'Service slide ' + (idx + 1) + ' of ' + n);
+      btn.textContent = String(idx + 1);
+      btn.addEventListener('click', () => {
+        goToService(idx);
+        scheduleServiceAutoplay();
+      });
+      serviceDotsContainer.appendChild(btn);
+    }
+
+    if (n > SERVICE_DOT_WINDOW && start + count < n) appendEllipsis('right');
   }
 
   function goToService(index) {
@@ -259,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
     serviceIndex = ((index % n) + n) % n;
     const w = serviceItems[0].offsetWidth;
     serviceSlider.style.left = -(w * serviceIndex) + 'px';
-    syncServiceDots();
+    renderServiceDots();
   }
 
   let serviceAutoplayId = null;
@@ -270,20 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (serviceSlider && serviceDotsContainer && serviceItems.length) {
-    serviceDotsContainer.innerHTML = '';
-    serviceItems.forEach((_, i) => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'f-service-dot' + (i === 0 ? ' active' : '');
-      btn.dataset.index = String(i);
-      btn.setAttribute('aria-label', 'Service slide ' + (i + 1) + ' of ' + serviceItems.length);
-      btn.textContent = String(i + 1);
-      btn.addEventListener('click', () => {
-        goToService(i);
-        scheduleServiceAutoplay();
-      });
-      serviceDotsContainer.appendChild(btn);
-    });
+    renderServiceDots();
   }
 
   if (serviceNext && serviceSlider && serviceItems.length) {
@@ -310,6 +348,164 @@ document.addEventListener('DOMContentLoaded', () => {
 
     scheduleServiceAutoplay();
   }
+
+  /* ---- Project category sliders (projects.html — same pagination pattern as services) ---- */
+  const PROJECT_DOT_WINDOW = 5;
+  const PROJECT_AUTOPLAY_MS = 3000;
+
+  function initProjectPortfolioSliders() {
+    document.querySelectorAll('.f-projects-scroll[data-project-scroll]').forEach(scrollEl => {
+      const key = scrollEl.getAttribute('data-project-scroll');
+      if (!key) return;
+      const dotsContainer = document.querySelector('[data-project-dots="' + key + '"]');
+      const prevBtn = document.querySelector('.f-projects-slider-prev[data-project-key="' + key + '"]');
+      const nextBtn = document.querySelector('.f-projects-slider-next[data-project-key="' + key + '"]');
+      const cards = Array.from(scrollEl.querySelectorAll(':scope > .f-project-card'));
+      if (!cards.length || !dotsContainer) return;
+
+      let index = 0;
+      let scrollRaf = null;
+      let projectAutoplayId = null;
+
+      function scheduleProjectAutoplay() {
+        if (prefersReducedMotion) return;
+        if (projectAutoplayId !== null) clearInterval(projectAutoplayId);
+        projectAutoplayId = setInterval(() => {
+          goTo(index + 1, true);
+        }, PROJECT_AUTOPLAY_MS);
+      }
+
+      function userGoTo(i, smooth) {
+        goTo(i, smooth);
+        scheduleProjectAutoplay();
+      }
+
+      function renderDots() {
+        const n = cards.length;
+        dotsContainer.innerHTML = '';
+        const start =
+          n <= PROJECT_DOT_WINDOW
+            ? 0
+            : Math.min(Math.max(index - 2, 0), n - PROJECT_DOT_WINDOW);
+        const count = Math.min(PROJECT_DOT_WINDOW, n);
+
+        function appendEllipsis(direction) {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'f-service-dot f-service-dot--ellipsis';
+          btn.textContent = '\u2026';
+          if (direction === 'left') {
+            btn.setAttribute('aria-label', 'Earlier projects');
+            btn.addEventListener('click', () => userGoTo(start - 1, true));
+          } else {
+            btn.setAttribute('aria-label', 'Later projects');
+            btn.addEventListener('click', () => userGoTo(start + count, true));
+          }
+          dotsContainer.appendChild(btn);
+        }
+
+        if (n > PROJECT_DOT_WINDOW && start > 0) appendEllipsis('left');
+
+        for (let i = 0; i < count; i++) {
+          const idx = start + i;
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'f-service-dot' + (idx === index ? ' active' : '');
+          btn.dataset.index = String(idx);
+          btn.setAttribute('aria-label', 'Project slide ' + (idx + 1) + ' of ' + n);
+          btn.textContent = String(idx + 1);
+          btn.addEventListener('click', () => userGoTo(idx, true));
+          dotsContainer.appendChild(btn);
+        }
+
+        if (n > PROJECT_DOT_WINDOW && start + count < n) appendEllipsis('right');
+      }
+
+      function scrollPositionForIndex(i) {
+        const card = cards[i];
+        const ideal = card.offsetLeft - (scrollEl.clientWidth - card.offsetWidth) / 2;
+        const max = Math.max(0, scrollEl.scrollWidth - scrollEl.clientWidth);
+        return Math.max(0, Math.min(max, ideal));
+      }
+
+      function goTo(i, smooth) {
+        const n = cards.length;
+        index = ((i % n) + n) % n;
+        const target = scrollPositionForIndex(index);
+        if (smooth) {
+          scrollEl.scrollTo({ left: target, behavior: 'smooth' });
+        } else {
+          scrollEl.scrollLeft = target;
+        }
+        renderDots();
+      }
+
+      function syncIndexFromScroll() {
+        const box = scrollEl.getBoundingClientRect();
+        const mid = box.left + box.width / 2;
+        let bestIdx = 0;
+        let bestDist = Infinity;
+        cards.forEach((c, i) => {
+          const r = c.getBoundingClientRect();
+          const cMid = r.left + r.width / 2;
+          const d = Math.abs(cMid - mid);
+          if (d < bestDist) {
+            bestDist = d;
+            bestIdx = i;
+          }
+        });
+        if (bestIdx !== index) {
+          index = bestIdx;
+          renderDots();
+        }
+      }
+
+      scrollEl.addEventListener(
+        'scroll',
+        () => {
+          if (scrollRaf !== null) cancelAnimationFrame(scrollRaf);
+          scrollRaf = requestAnimationFrame(() => {
+            scrollRaf = null;
+            syncIndexFromScroll();
+          });
+        },
+        { passive: true }
+      );
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => userGoTo(index + 1, true));
+      }
+      if (prevBtn) {
+        prevBtn.addEventListener('click', () => userGoTo(index - 1, true));
+      }
+
+      scrollEl.addEventListener('mousedown', scheduleProjectAutoplay, { passive: true });
+      scrollEl.addEventListener('touchstart', scheduleProjectAutoplay, { passive: true });
+
+      window.addEventListener(
+        'resize',
+        () => {
+          goTo(index, false);
+          scheduleProjectAutoplay();
+        },
+        { passive: true }
+      );
+
+      renderDots();
+      goTo(0, false);
+      scheduleProjectAutoplay();
+      window.addEventListener(
+        'load',
+        () => {
+          goTo(index, false);
+          scheduleProjectAutoplay();
+        },
+        { once: true }
+      );
+    });
+  }
+
+  initProjectPortfolioSliders();
 
   /* ---- Services 3D tilt effect ---- */
   if (supportsHover && !prefersReducedMotion) {
@@ -473,10 +669,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ---- Horizontal drag scroll for projects ---- */
-  const projectsScroll = document.querySelector('.f-projects-scroll');
-  if (projectsScroll) {
-    let isDown = false, startX, scrollLeft;
+  /* ---- Horizontal drag scroll for project strips (index featured + projects page categories) ---- */
+  document.querySelectorAll('.f-projects-scroll').forEach(projectsScroll => {
+    const isPaginated = projectsScroll.hasAttribute('data-project-scroll');
+    let isDown = false;
+    let startX = 0;
+    let scrollLeft = 0;
     let projectAutoplay = null;
 
     const projectCards = projectsScroll.querySelectorAll('.f-project-card');
@@ -488,7 +686,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const startProjectAutoplay = () => {
-      if (projectAutoplay || !projectCards.length) return;
+      if (isPaginated || projectAutoplay || !projectCards.length) return;
       projectAutoplay = setInterval(() => {
         const step = cardWidth();
         if (!step) return;
@@ -520,8 +718,14 @@ document.addEventListener('DOMContentLoaded', () => {
       startX = e.pageX - projectsScroll.offsetLeft;
       scrollLeft = projectsScroll.scrollLeft;
     });
-    projectsScroll.addEventListener('mouseleave', () => { isDown = false; startProjectAutoplay(); });
-    projectsScroll.addEventListener('mouseup', () => { isDown = false; startProjectAutoplay(); });
+    projectsScroll.addEventListener('mouseleave', () => {
+      isDown = false;
+      startProjectAutoplay();
+    });
+    projectsScroll.addEventListener('mouseup', () => {
+      isDown = false;
+      startProjectAutoplay();
+    });
     projectsScroll.addEventListener('mousemove', e => {
       if (!isDown) return;
       e.preventDefault();
@@ -529,7 +733,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const walk = (x - startX) * 2;
       projectsScroll.scrollLeft = scrollLeft - walk;
     });
-  }
+  });
 
   /* ---- Gallery fullscreen view (all pages) ---- */
   const galleryItems = document.querySelectorAll('.f-gal-item');

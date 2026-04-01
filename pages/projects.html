@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="FARJAR Projects — Explore our portfolio of 42+ completed commercial fitout and construction projects across Oman.">
+  <meta name="description" content="FARJAR Projects — Explore our portfolio of 42 completed commercial fitout and construction projects across Oman.">
   <title>Projects — FARJAR</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +19,7 @@
     <div class="f-page-hero-content">
       <span class="f-label">Our Portfolio</span>
       <h1>Projects</h1>
-      <p>Browse every delivery by category—each card includes a tailored project narrative, scope of work, execution and completion dates, a map link when available, and photography from our archive. Drag any row horizontally to explore.</p>
+      <p>Browse every delivery by category—each card includes a tailored project narrative, scope of work, execution and completion dates, a map link when available, and photography from our archive. Drag each row or use the arrows and numbered dots below.</p>
     </div>
   </section>
 
@@ -40,23 +40,24 @@
   <script>
     (function () {
       const IMG = {
+        defaultProject: '../assets/images/projects/defaultimg.jpg',
         jelal: '../assets/images/projects/JELAL EFENDI RESTAURANT/JELAL EFENDI RESTAURANT 01.png',
         vian: '../assets/images/projects/VIAN CROISSANTS/VIAN CROISSANTS 01.png',
         alBaleed: '../assets/images/projects/AL BALEED MUSUEM/AL BALEED MUSUEM 01.jpeg',
-        myriad: '../assets/images/projects/Myriad 55/55 MYRIAD HOTEL -RUSAYL (01).png',
-        teaTown: '../assets/images/projects/Tea Town/Tea Town 01.png',
-        watchesco: '../assets/images/projects/Watchesco/Watchesco 01.png',
-        ur20: '../assets/images/projects/UR 20/UR 20 (01).png',
+        myriad: '../assets/images/projects/Myriad 55/WhatsApp Image 2026-03-09 at 11.30.34 AM.jpeg',
+        teaTown: '../assets/images/projects/Tea Town/Tea Town 02.png',
+        watchesco: '../assets/images/projects/Watchesco/IMG_7106.JPG',
+        ur20: '../assets/images/projects/UR 20/UR 20 (04).png',
         caika: '../assets/images/projects/CAIKA CAFE SALALA/CAIKA CAFE SALALA 01.png',
         damas: '../assets/images/projects/Damas Hotel/Damas Hotel 01.png',
-        azaiba: '../assets/images/projects/55 Azaiba/55 Azaiba 01.jpeg',
-        gardens: '../assets/images/projects/55 Gardenes Mall/55 GARDENS MALL - SALALAH (01).png',
-        mawaleh: '../assets/images/projects/55 Mawaleh/55 Mawaleh 01.jpeg',
-        haffa: '../assets/images/projects/Haffa/Haffa01.jpeg',
-        rbat: "../assets/images/projects/55 R'Bat/Rbat 01.jpeg",
-        ittin: '../assets/images/projects/55 ITTIN - SALALAH/55 ITTIN - SALALAH 01 .png',
+        azaiba: '../assets/images/projects/55 Azaiba/55 Azaiba 05.jpeg',
+        gardens: '../assets/images/projects/55 Gardenes Mall/55 GARDENS MALL - SALALAH (02).png',
+        mawaleh: '../assets/images/projects/55 Mawaleh/55 Mawaleh 03.jpeg',
+        haffa: '../assets/images/projects/Haffa/HAFFA FINAL 3D_page-0002.jpg',
+        rbat: '../assets/images/projects/55 R_Bat/Rbat-Finalrender_page-0007.jpg',
+        ittin: '../assets/images/projects/55 R_Bat/Rbat-Finalrender_page-0001.jpg',
         mabela: '../assets/images/projects/55 mabela II/55 mabela II 01.jpeg',
-        default55: '../assets/images/projects/55 Azaiba/55 Azaiba 01.jpeg',
+        default55: '../assets/images/projects/55 Azaiba/55 Azaiba 05.jpeg',
       };
 
       function imageFor55Location(loc) {
@@ -85,7 +86,7 @@
         if (n.includes('CAIKA')) return IMG.caika;
         if (n.includes('20UR')) return IMG.ur20;
         if (n.includes('55 COFFEE')) return imageFor55Location(l);
-        return IMG.mawaleh;
+        return IMG.defaultProject;
       }
 
       const categories = [
@@ -96,21 +97,21 @@
           description: 'High-traffic F&B environments where layout, lighting, and durable finishes need to work as hard as the service team. We deliver coordinated fitout, joinery, furniture, MEP, and signage so each brand reads clearly from the first visit.',
           cardTag: 'Food & beverage',
           rows: [
-            { name: '55 COFFEE', location: 'Airport Heights, Ghala', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/txu6A7owK4Kf7e3Q9', execution: '8/23/2023', completion: '11/15/2023' },
-            { name: '55 COFFEE', location: 'Mabela - 2', scope: 'AC works', map: 'https://maps.app.goo.gl/FBywsoko7sukts7b8', execution: '11/18/2023', completion: '11/24/2023' },
-            { name: '55 COFFEE', location: 'Mawaleh, Seeb', scope: 'MEP & civil works', map: 'https://maps.app.goo.gl/cyMybjb7mYSoC7wT6', execution: '9/14/2023', completion: '12/18/2023' },
-            { name: '55 COFFEE', location: 'Myriad Hotel - Rusayl', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/2cDKb9DZ6wgs6D9u9', execution: '12/2/2023', completion: '3/4/2024' },
-            { name: '55 COFFEE', location: 'Suwaiq', scope: 'AC servicing', map: null, execution: '4/4/2024', completion: '4/6/2024' },
-            { name: '55 COFFEE', location: 'Rubat Street - Salalah', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/e9c8daigvjmtxKPB8', execution: '4/10/2024', completion: '6/15/2024' },
-            { name: '55 COFFEE', location: 'Gardens Mall - Salalah', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/sXcB9aDWZLLtURyz5', execution: '8/1/2024', completion: '10/30/2024' },
-            { name: '55 COFFEE', location: 'Haffa Walk - Salalah', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/BVxDy34Po8k47sR98', execution: '8/4/2024', completion: '11/13/2024' },
-            { name: '55 COFFEE', location: 'Azaiba (Near Airport)', scope: 'Maintenance', map: 'https://maps.app.goo.gl/ijtb5HWRh2kUyMom7', execution: '9/12/2024', completion: '11/15/2024' },
-            { name: '55 COFFEE', location: 'Ittin - Salalah', scope: 'Civil works', map: 'https://maps.app.goo.gl/USLeFKQUXjVRsWPz6', execution: '10/24/2024', completion: '12/25/2024' },
-            { name: 'VIAN CROISSANTS', location: 'Al Khoud Square', scope: 'Furniture & joinery', map: 'https://maps.app.goo.gl/fxmrHDbhQxyHC5P5A', execution: '12/24/2024', completion: '1/18/2025' },
-            { name: 'JELAL EFENDI RESTAURANT', location: 'Mawaleh, Seeb', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/nijRiuoAsoJZXajm6', execution: '1/20/2025', completion: '4/20/2025' },
-            { name: 'MUSCAFE', location: 'Bousher', scope: 'Fitout, MEP & furniture', map: 'https://maps.app.goo.gl/qm6yaVa26LyxZNMx7', execution: '5/5/2024', completion: '6/25/2025' },
-            { name: 'CAIKA', location: 'Salalah', scope: 'Civil works', map: 'https://maps.app.goo.gl/huw3qxLgQxfs8ctm8', execution: '7/19/2025', completion: '7/20/2025' },
-            { name: 'SIGN CAFE', location: 'Al Amerat', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/PmpKLXLC5PmMHhN36', execution: '12/15/2025', completion: '1/25/2026' },
+            { name: 'Fifty five coffee', location: 'Airport Heights, Ghala', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/txu6A7owK4Kf7e3Q9', execution: '8/23/2023', completion: '11/15/2023', image: '../assets/images/projects/55 Azaiba/55 Azaiba 05.jpeg' },
+            { name: 'Fifty five coffee', location: 'Mabela - 2', scope: 'AC works', map: 'https://maps.app.goo.gl/FBywsoko7sukts7b8', execution: '11/18/2023', completion: '11/24/2023', image: '../assets/images/projects/defaultimg.jpg' },
+            { name: 'Fifty five coffee', location: 'Mawaleh, Seeb', scope: 'MEP & civil works', map: 'https://maps.app.goo.gl/cyMybjb7mYSoC7wT6', execution: '9/14/2023', completion: '12/18/2023', image: '../assets/images/projects/55 Mawaleh/55 Mawaleh 03.jpeg' },
+            { name: 'Fifty five coffee', location: 'Myriad Hotel - Rusayl', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/2cDKb9DZ6wgs6D9u9', execution: '12/2/2023', completion: '3/4/2024', image: '../assets/images/projects/Myriad 55/WhatsApp Image 2026-03-09 at 11.30.34 AM.jpeg' },
+            { name: 'Fifty five coffee', location: 'Suwaiq', scope: 'AC servicing', map: null, execution: '4/4/2024', completion: '4/6/2024', image: '../assets/images/projects/Suwaiq/KIOSK 3D_page-0005.jpg' },
+            { name: 'Fifty five coffee', location: 'Rubat Street - Salalah', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/e9c8daigvjmtxKPB8', execution: '4/10/2024', completion: '6/15/2024', image: '../assets/images/projects/55 R_Bat/Rbat-Finalrender_page-0007.jpg' },
+            { name: 'Fifty five coffee', location: 'Gardens Mall - Salalah', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/sXcB9aDWZLLtURyz5', execution: '8/1/2024', completion: '10/30/2024', image: '../assets/images/projects/55 Gardenes Mall/55 GARDENS MALL - SALALAH (02).png' },
+            { name: 'Fifty five coffee', location: 'Haffa Walk - Salalah', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/BVxDy34Po8k47sR98', execution: '8/4/2024', completion: '11/13/2024', image: '../assets/images/projects/Haffa/HAFFA FINAL 3D_page-0002.jpg' },
+            { name: 'Fifty five coffee', location: 'Azaiba (Near Airport)', scope: 'Maintenance', map: 'https://maps.app.goo.gl/ijtb5HWRh2kUyMom7', execution: '9/12/2024', completion: '11/15/2024', image: '../assets/images/projects/55 R_Bat/Rbat-Finalrender_page-0011.jpg' },
+            { name: 'Fifty five coffee', location: 'Ittin - Salalah', scope: 'Civil works', map: 'https://maps.app.goo.gl/USLeFKQUXjVRsWPz6', execution: '10/24/2024', completion: '12/25/2024', image: '../assets/images/projects/55 R_Bat/Rbat-Finalrender_page-0001.jpg' },
+            { name: 'VIAN CROISSANTS', location: 'Al Khoud Square', scope: 'Furniture & joinery', map: 'https://maps.app.goo.gl/fxmrHDbhQxyHC5P5A', execution: '12/24/2024', completion: '1/18/2025', image: '../assets/images/projects/VIAN CROISSANTS/VIAN CROISSANTS 01.png' },
+            { name: 'JELAL EFENDI RESTAURANT', location: 'Mawaleh, Seeb', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/nijRiuoAsoJZXajm6', execution: '1/20/2025', completion: '4/20/2025', image: '../assets/images/projects/JELAL EFENDI RESTAURANT/JELAL EFENDI RESTAURANT 01.png' },
+            { name: 'MUSCAFE', location: 'Bousher', scope: 'Fitout, MEP & furniture', map: 'https://maps.app.goo.gl/qm6yaVa26LyxZNMx7', execution: '5/5/2024', completion: '6/25/2025', image: '../assets/images/projects/Muscafe/IMG_0245.png' },
+            { name: 'CAIKA', location: 'Salalah', scope: 'Civil works', map: 'https://maps.app.goo.gl/huw3qxLgQxfs8ctm8', execution: '7/19/2025', completion: '7/20/2025', image: '../assets/images/projects/CAIKA CAFE SALALA/CAIKA CAFE SALALA 01.png' },
+            { name: 'SIGN CAFE', location: 'Al Amerat', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/PmpKLXLC5PmMHhN36', execution: '12/15/2025', completion: '1/25/2026', image: '../assets/images/projects/defaultimg.jpg' },
             { name: 'ITALIAN BARRISTA CAFE', location: 'Rustaq', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/YprxAL2ZKWHce9xM9', execution: '7/15/2025', completion: '9/30/2025' },
             { name: 'ITALIAN BARRISTA CAFE', location: 'Al Khuwair', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/4NV73MH8VmhVrNTj8', execution: '11/1/2025', completion: '2/28/2026' },
             { name: 'CHAII', location: 'Grand Flora - Salalah', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/YMvch3L67xRQiDEK6', execution: '2/21/2026', completion: '3/25/2026' },
@@ -118,8 +119,8 @@
             { name: 'CHAII', location: 'Saada - Salalah', scope: 'Fitout, MEP & signage', map: 'https://maps.app.goo.gl/dgFo3po6Y1oxxNuc7', execution: '2/21/2026', completion: '3/25/2026' },
             { name: 'BURGER GELLATTO', location: 'Al Khuwair', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/AxVdNb5rXdnyQujK6', execution: null, completion: null },
             { name: 'LOREVA (VENIER COFFEE)', location: 'Grand Mall - Salalah', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/v2rVSbw6qVBqnZr38', execution: '5/19/2025', completion: '7/18/2025' },
-            { name: 'TEA TOWN', location: 'Azaiba (Near Airport)', scope: 'Furniture', map: 'https://maps.app.goo.gl/Fwd9MajLq8sDxVeU6', execution: '9/23/2025', completion: '10/4/2025' },
-            { name: '20UR COFFEE', location: 'Sur', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/qghZbaQ6hcbyoq6R8', execution: '12/1/2024', completion: '1/31/2025' },
+            { name: 'TEA TOWN', location: 'Azaiba (Near Airport)', scope: 'Furniture', map: 'https://maps.app.goo.gl/Fwd9MajLq8sDxVeU6', execution: '9/23/2025', completion: '10/4/2025', image: '../assets/images/projects/Tea Town/Tea Town 02.png' },
+            { name: '20UR COFFEE', location: 'Sur', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/qghZbaQ6hcbyoq6R8', execution: '12/1/2024', completion: '1/31/2025', image: '../assets/images/projects/UR 20/UR 20 (04).png' },
           ],
         },
         {
@@ -132,7 +133,7 @@
             { name: '4 POINTS BY SHERATON', location: 'Duqm Free Zone', scope: 'Fitout & joinery', map: 'https://maps.app.goo.gl/EoAbw1GK8vh25Y1Z7', execution: '8/1/2025', completion: '10/10/2025' },
             { name: '4 POINTS BY SHERATON', location: 'Duqm Free Zone', scope: 'Furniture', map: 'https://maps.app.goo.gl/EoAbw1GK8vh25Y1Z7', execution: '10/25/2025', completion: '2/25/2026' },
             { name: 'DAMAS HOTEL', location: 'Ghubra, Muscat', scope: 'Signage', map: 'https://maps.app.goo.gl/TApJz3Qp8mZkQcdN9', execution: null, completion: null },
-            { name: 'KIRIAD HOTEL', location: 'Salalah', scope: '—', map: 'https://maps.app.goo.gl/4a1MiYkZsFmT7AuV9', execution: null, completion: null },
+            { name: 'KIRIAD HOTEL', location: 'Salalah', scope: 'N/A', map: 'https://maps.app.goo.gl/4a1MiYkZsFmT7AuV9', execution: null, completion: null },
           ],
         },
         {
@@ -142,7 +143,7 @@
           description: 'Precision joinery and lighting for retail storytelling—vitrines, cash wraps, watch galleries, and mall kiosks engineered for product focus and durability in climate-controlled settings.',
           cardTag: 'Retail',
           rows: [
-            { name: 'WATCHESCO', location: 'Qurum, Muscat', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/AwyVhXLQGuejP11f6', execution: '7/15/2025', completion: '9/30/2025' },
+            { name: 'WATCHESCO', location: 'Qurum, Muscat', scope: 'Fitout, furniture, MEP & signage', map: 'https://maps.app.goo.gl/AwyVhXLQGuejP11f6', execution: '7/15/2025', completion: '9/30/2025', image: '../assets/images/projects/Watchesco/IMG_7106.JPG' },
             { name: 'AL RIFAI ROASTERY', location: 'Mall of Oman - Muscat', scope: 'Fitout & joinery', map: 'https://maps.app.goo.gl/pfVF5L6mAoDnBwJG8', execution: '12/24/2024', completion: '1/31/2025' },
             { name: 'BARIQ AL KHALEEJ', location: 'Wadi Al Kabir', scope: 'Kiosk', map: null, execution: null, completion: null },
             { name: 'BINT AL SHEIKH', location: 'Muscat Exhibition Centre', scope: 'Kiosk', map: null, execution: '2/20/2026', completion: '2/25/2026' },
@@ -310,7 +311,7 @@
         return (
           '<div class="f-project-card">' +
             '<div class="f-project-img-wrapper">' +
-              '<img src="' + src + '" alt="' + alt + '" loading="lazy">' +
+              '<img src="' + src + '" alt="' + alt + '" loading="lazy" onerror="this.onerror=null;this.src=\'' + IMG.defaultProject + '\'">' +
             '</div>' +
             '<div class="f-project-info">' +
               '<p class="f-project-cat">' + tag + '</p>' +
@@ -338,6 +339,7 @@
         }).join('');
         var revealL = idx % 2 === 0 ? 'left' : 'right';
         var revealR = idx % 2 === 0 ? 'right' : 'left';
+        var k = escapeAttr(cat.key);
         return (
           '<section class="f-projects f-projects-category" style="padding-top:4.5rem">' +
             '<div class="f-projects-header">' +
@@ -346,9 +348,16 @@
                 '<h2>' + escapeHtml(cat.title) + '</h2>' +
                 '<p class="f-category-desc">' + escapeHtml(cat.description) + '</p>' +
               '</div>' +
-              '<p style="font-size:0.85rem;color:rgba(22,26,29,0.35);max-width:300px;text-align:right" data-reveal="' + revealR + '">Drag horizontally to scroll this category.</p>' +
+              '<p style="font-size:0.85rem;color:rgba(22,26,29,0.35);max-width:300px;text-align:right" data-reveal="' + revealR + '">Scroll, drag, or use the controls below.</p>' +
             '</div>' +
-            '<div class="f-projects-scroll">' + cards + '</div>' +
+            '<div class="f-projects-slider-stack">' +
+              '<div class="f-projects-scroll" data-project-scroll="' + k + '">' + cards + '</div>' +
+              '<div class="f-service-slider-nav f-projects-slider-nav">' +
+                '<button type="button" class="f-projects-slider-prev" data-project-key="' + k + '" aria-label="Previous project">&#8592;</button>' +
+                '<div class="f-service-dots f-projects-dots" data-project-dots="' + k + '" aria-label="Project slides"></div>' +
+                '<button type="button" class="f-projects-slider-next" data-project-key="' + k + '" aria-label="Next project">&#8594;</button>' +
+              '</div>' +
+            '</div>' +
           '</section>'
         );
       }).join('');
