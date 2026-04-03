@@ -103,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const aboutParagraphs = aboutSection.querySelectorAll('.f-about-content > p');
     const aboutValues = aboutSection.querySelector('.f-about-values');
     const aboutImg = aboutSection.querySelector('.f-about-visual img');
+    const aboutStat = aboutSection.querySelector('.f-about-visual-stat');
 
     const aboutTl = gsap.timeline({
       scrollTrigger: {
@@ -155,21 +156,49 @@ document.addEventListener('DOMContentLoaded', () => {
         ease: 'power3.out',
       }, '-=0.4');
     }
+
+    // Scroll-zoom the about image for a subtle depth effect
+    if (aboutImg) {
+      gsap.to(aboutImg, {
+        scale: 1.08,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: aboutSection,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1,
+        }
+      });
+    }
+
+    // Float the stats card gently up and down
+    if (aboutStat) {
+      gsap.to(aboutStat, {
+        y: -16,
+        duration: 3.2,
+        ease: 'sine.inOut',
+        repeat: -1,
+        yoyo: true,
+      });
+    }
   }
 
-  /* ---- Parallax images ---- */
-  gsap.utils.toArray('[data-parallax]').forEach(img => {
-    gsap.to(img, {
-      yPercent: -15,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: img.parentElement,
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: 1,
-      }
+  /* ---- Parallax images (.f-about-visual: milder y + CSS overscan avoids gaps) ---- */
+  if (!prefersReducedMotion) {
+    gsap.utils.toArray('[data-parallax]').forEach(img => {
+      const inAboutVisual = img.closest('.f-about-visual');
+      gsap.to(img, {
+        yPercent: inAboutVisual ? -10 : -15,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: img.parentElement,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1,
+        }
+      });
     });
-  });
+  }
 
   /* ---- Subtle Hover Lift on Cards ---- */
   function addLiftEffect(selector) {
@@ -313,11 +342,62 @@ document.addEventListener('DOMContentLoaded', () => {
     renderServiceDots();
   }
 
+  const SERVICE_AUTOPLAY_MS = 3000;
   let serviceAutoplayId = null;
+  let servicePointerInside = false;
+  /** Autoplay only after the services block is visible (IntersectionObserver). */
+  let serviceAutoplayViewportUnlocked = false;
+
+  function stopServiceAutoplay() {
+    if (serviceAutoplayId !== null) {
+      clearInterval(serviceAutoplayId);
+      serviceAutoplayId = null;
+    }
+  }
+
   function scheduleServiceAutoplay() {
+    if (!serviceAutoplayViewportUnlocked) return;
     if (!serviceSlider || !serviceItems.length) return;
-    if (serviceAutoplayId !== null) clearInterval(serviceAutoplayId);
-    serviceAutoplayId = setInterval(() => goToService(serviceIndex + 1), 3000);
+    if (prefersReducedMotion) return;
+    stopServiceAutoplay();
+    if (servicePointerInside) return;
+    serviceAutoplayId = setInterval(() => goToService(serviceIndex + 1), SERVICE_AUTOPLAY_MS);
+  }
+
+  const serviceHoverRegion = document.querySelector('.f-service-slider-region');
+  if (serviceHoverRegion && serviceSlider && serviceItems.length) {
+    serviceHoverRegion.addEventListener('mouseenter', () => {
+      servicePointerInside = true;
+      stopServiceAutoplay();
+    });
+    serviceHoverRegion.addEventListener('mouseleave', () => {
+      servicePointerInside = false;
+      scheduleServiceAutoplay();
+    });
+    serviceHoverRegion.addEventListener(
+      'touchstart',
+      () => {
+        servicePointerInside = true;
+        stopServiceAutoplay();
+      },
+      { passive: true }
+    );
+    serviceHoverRegion.addEventListener(
+      'touchend',
+      () => {
+        servicePointerInside = false;
+        scheduleServiceAutoplay();
+      },
+      { passive: true }
+    );
+    serviceHoverRegion.addEventListener(
+      'touchcancel',
+      () => {
+        servicePointerInside = false;
+        scheduleServiceAutoplay();
+      },
+      { passive: true }
+    );
   }
 
   if (serviceSlider && serviceDotsContainer && serviceItems.length) {
@@ -346,7 +426,27 @@ document.addEventListener('DOMContentLoaded', () => {
       { passive: true }
     );
 
-    scheduleServiceAutoplay();
+    const serviceObserveTarget =
+      serviceHoverRegion || serviceSlider.closest('.f-services') || serviceSlider;
+    if (typeof IntersectionObserver !== 'undefined' && serviceObserveTarget) {
+      const serviceIo = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            goToService(0);
+            serviceAutoplayViewportUnlocked = true;
+            scheduleServiceAutoplay();
+            serviceIo.disconnect();
+          });
+        },
+        { threshold: 0.5 }
+      );
+      serviceIo.observe(serviceObserveTarget);
+    } else {
+      serviceAutoplayViewportUnlocked = true;
+      goToService(0);
+      scheduleServiceAutoplay();
+    }
   }
 
   /* ---- Project category sliders (projects.html — same pagination pattern as services) ---- */
@@ -366,10 +466,21 @@ document.addEventListener('DOMContentLoaded', () => {
       let index = 0;
       let scrollRaf = null;
       let projectAutoplayId = null;
+      let stackPointerInside = false;
+      let projectAutoplayViewportUnlocked = false;
+
+      function stopProjectAutoplay() {
+        if (projectAutoplayId !== null) {
+          clearInterval(projectAutoplayId);
+          projectAutoplayId = null;
+        }
+      }
 
       function scheduleProjectAutoplay() {
+        if (!projectAutoplayViewportUnlocked) return;
         if (prefersReducedMotion) return;
-        if (projectAutoplayId !== null) clearInterval(projectAutoplayId);
+        stopProjectAutoplay();
+        if (stackPointerInside) return;
         projectAutoplayId = setInterval(() => {
           goTo(index + 1, true);
         }, PROJECT_AUTOPLAY_MS);
@@ -479,8 +590,25 @@ document.addEventListener('DOMContentLoaded', () => {
         prevBtn.addEventListener('click', () => userGoTo(index - 1, true));
       }
 
-      scrollEl.addEventListener('mousedown', scheduleProjectAutoplay, { passive: true });
-      scrollEl.addEventListener('touchstart', scheduleProjectAutoplay, { passive: true });
+      const sliderStack = scrollEl.closest('.f-projects-slider-stack');
+      if (sliderStack) {
+        sliderStack.addEventListener('mouseenter', () => {
+          stackPointerInside = true;
+          stopProjectAutoplay();
+        });
+        sliderStack.addEventListener('mouseleave', () => {
+          stackPointerInside = false;
+          scheduleProjectAutoplay();
+        });
+        sliderStack.addEventListener('touchstart', () => {
+          stackPointerInside = true;
+          stopProjectAutoplay();
+        }, { passive: true });
+        sliderStack.addEventListener('touchend', () => {
+          stackPointerInside = false;
+          scheduleProjectAutoplay();
+        }, { passive: true });
+      }
 
       window.addEventListener(
         'resize',
@@ -493,12 +621,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
       renderDots();
       goTo(0, false);
-      scheduleProjectAutoplay();
+
+      const portfolioObserveTarget = sliderStack || scrollEl;
+      if (typeof IntersectionObserver !== 'undefined' && portfolioObserveTarget) {
+        const portfolioIo = new IntersectionObserver(
+          entries => {
+            entries.forEach(entry => {
+              if (!entry.isIntersecting) return;
+              goTo(0, false);
+              projectAutoplayViewportUnlocked = true;
+              scheduleProjectAutoplay();
+              portfolioIo.disconnect();
+            });
+          },
+          { threshold: 0.5 }
+        );
+        portfolioIo.observe(portfolioObserveTarget);
+      } else {
+        projectAutoplayViewportUnlocked = true;
+        scheduleProjectAutoplay();
+      }
+
       window.addEventListener(
         'load',
         () => {
           goTo(index, false);
-          scheduleProjectAutoplay();
+          if (projectAutoplayViewportUnlocked) scheduleProjectAutoplay();
         },
         { once: true }
       );
@@ -641,7 +789,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ---- Smooth Parallax Sections ---- */
-  gsap.utils.toArray('.f-about-visual, .f-contact-map-side').forEach(el => {
+  gsap.utils.toArray('.f-contact-map-side').forEach(el => {
     gsap.to(el, {
       yPercent: -4,
       ease: 'none',
@@ -670,12 +818,18 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ---- Horizontal drag scroll for project strips (index featured + projects page categories) ---- */
+  const INDEX_PROJECT_AUTOPLAY_MS = 3000;
+
   document.querySelectorAll('.f-projects-scroll').forEach(projectsScroll => {
     const isPaginated = projectsScroll.hasAttribute('data-project-scroll');
     let isDown = false;
     let startX = 0;
     let scrollLeft = 0;
     let projectAutoplay = null;
+    /** Index featured strip: autoplay only after viewport entry (see IntersectionObserver below). */
+    let featuredStripAutoplayUnlocked = false;
+    /** Index featured strip: pause while pointer/touch is over the scroll (matches Owl autoplayHoverPause / Swiper pauseOnMouseEnter). */
+    let stripPointerInside = false;
 
     const projectCards = projectsScroll.querySelectorAll('.f-project-card');
     const cardWidth = () => {
@@ -687,6 +841,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const startProjectAutoplay = () => {
       if (isPaginated || projectAutoplay || !projectCards.length) return;
+      if (!isPaginated && !featuredStripAutoplayUnlocked) return;
+      if (stripPointerInside) return;
       projectAutoplay = setInterval(() => {
         const step = cardWidth();
         if (!step) return;
@@ -696,7 +852,7 @@ document.addEventListener('DOMContentLoaded', () => {
           left: atEnd ? 0 : projectsScroll.scrollLeft + step,
           behavior: 'smooth'
         });
-      }, 3800);
+      }, INDEX_PROJECT_AUTOPLAY_MS);
     };
 
     const stopProjectAutoplay = () => {
@@ -705,22 +861,59 @@ document.addEventListener('DOMContentLoaded', () => {
       projectAutoplay = null;
     };
 
-    startProjectAutoplay();
+    const stripHoverTarget =
+      !isPaginated && projectsScroll.closest('.f-projects-slider-stack')
+        ? projectsScroll.closest('.f-projects-slider-stack')
+        : projectsScroll;
 
-    projectsScroll.addEventListener('mouseenter', stopProjectAutoplay);
-    projectsScroll.addEventListener('mouseleave', startProjectAutoplay);
-    projectsScroll.addEventListener('touchstart', stopProjectAutoplay, { passive: true });
-    projectsScroll.addEventListener('touchend', startProjectAutoplay, { passive: true });
+    if (!isPaginated && projectCards.length) {
+      if (typeof IntersectionObserver !== 'undefined') {
+        const featuredIo = new IntersectionObserver(
+          entries => {
+            entries.forEach(entry => {
+              if (!entry.isIntersecting) return;
+              projectsScroll.scrollLeft = 0;
+              featuredStripAutoplayUnlocked = true;
+              startProjectAutoplay();
+              featuredIo.disconnect();
+            });
+          },
+          { threshold: 0.5 }
+        );
+        featuredIo.observe(stripHoverTarget);
+      } else {
+        featuredStripAutoplayUnlocked = true;
+        startProjectAutoplay();
+      }
+    }
+
+    stripHoverTarget.addEventListener('mouseenter', () => {
+      stripPointerInside = true;
+      stopProjectAutoplay();
+    });
+    stripHoverTarget.addEventListener('mouseleave', () => {
+      stripPointerInside = false;
+      isDown = false;
+      startProjectAutoplay();
+    });
+    stripHoverTarget.addEventListener('touchstart', () => {
+      stripPointerInside = true;
+      stopProjectAutoplay();
+    }, { passive: true });
+    stripHoverTarget.addEventListener('touchend', () => {
+      stripPointerInside = false;
+      startProjectAutoplay();
+    }, { passive: true });
+    stripHoverTarget.addEventListener('touchcancel', () => {
+      stripPointerInside = false;
+      startProjectAutoplay();
+    }, { passive: true });
 
     projectsScroll.addEventListener('mousedown', e => {
       stopProjectAutoplay();
       isDown = true;
       startX = e.pageX - projectsScroll.offsetLeft;
       scrollLeft = projectsScroll.scrollLeft;
-    });
-    projectsScroll.addEventListener('mouseleave', () => {
-      isDown = false;
-      startProjectAutoplay();
     });
     projectsScroll.addEventListener('mouseup', () => {
       isDown = false;
@@ -770,12 +963,20 @@ document.addEventListener('DOMContentLoaded', () => {
   galNext = document.getElementById('fGalNext');
 
   if (galleryView && galleryImg && galleryItems.length) {
-    galleryImages = Array.from(galleryItems)
-      .map(item => item.querySelector('img')?.src)
-      .filter(Boolean);
+    const resolveGalleryImgUrl = (img) => {
+      if (!img) return '';
+      // Gallery page uses lazy-loaded thumbnails (data-src only until visible)
+      const fromLazy = img.dataset && img.dataset.src;
+      if (fromLazy) return fromLazy;
+      return img.currentSrc || img.src || '';
+    };
+
+    galleryImages = Array.from(galleryItems).map(item =>
+      resolveGalleryImgUrl(item.querySelector('img'))
+    );
 
     const updateGalleryImage = () => {
-      galleryImg.src = galleryImages[galleryIdx];
+      galleryImg.src = galleryImages[galleryIdx] || '';
     };
 
     const closeGallery = () => {

@@ -28,7 +28,7 @@
       </div>
       <div class="f-footer-col">
         <h5>Reach Us</h5>
-        <a href="connect@farjarinteriors.com">connect@farjarinteriors.com</a>
+        <a href="mailto:contact@farjarinteriors.com">contact@farjarinteriors.com</a>
         <a href="https://api.whatsapp.com/send?phone=96893930050">+968 9393 0050</a>
         <a>Building no 164, way 3305
 Dohat Al Adab street, Al Khuwair st

@@ -9,14 +9,53 @@ OUTPUT_JS = ROOT / "data" / "gallery-images.js"
 WEB_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
 LABEL_OVERRIDES = {
     "55 R_Bat": "55 R'Bat",
+    "Smile Line": "smile",
 }
+
+# Project folders to omit from gallery data (still on disk / projects page if needed).
+GALLERY_EXCLUDE_FOLDERS = frozenset({"VIAN CROISSANTS"})
+
+# Order of projects in the gallery (folders under assets/images/projects).
+# Folders not listed here are appended after, sorted by name.
+GALLERY_FOLDER_ORDER = [
+    "Watchesco",
+    "Haffa",
+    "55 R_Bat",
+    "JELAL EFENDI RESTAURANT",
+    "AL BALEED MUSUEM",
+    "Muscafe",
+    "Suwaiq",
+    "Myriad 55",
+    "Tea Town",
+    "UR 20",
+    "55 Azaiba",
+    "55 Gardenes Mall",
+    "CAIKA CAFE SALALA",
+    "55 Mawaleh",
+    "Sign",
+    "Smile Line",
+]
+
+
+def _ordered_folders(folder_names: set[str]) -> list[str]:
+    seen: set[str] = set()
+    ordered: list[str] = []
+    for name in GALLERY_FOLDER_ORDER:
+        if name in folder_names and name not in seen:
+            ordered.append(name)
+            seen.add(name)
+    rest = sorted((n for n in folder_names if n not in seen), key=str.lower)
+    ordered.extend(rest)
+    return ordered
 
 
 def collect_gallery_data() -> dict:
-    gallery_by_folder = {}
-    gallery_items = []
+    gallery_by_folder: dict[str, list[str]] = {}
+    folder_paths = [p for p in PROJECTS_DIR.iterdir() if p.is_dir()]
 
-    for folder in sorted((p for p in PROJECTS_DIR.iterdir() if p.is_dir()), key=lambda p: p.name.lower()):
+    for folder in sorted(folder_paths, key=lambda p: p.name.lower()):
+        if folder.name in GALLERY_EXCLUDE_FOLDERS:
+            continue
         files = [
             file.name
             for file in sorted(folder.iterdir(), key=lambda p: p.name.lower())
@@ -24,21 +63,26 @@ def collect_gallery_data() -> dict:
         ]
         if files:
             gallery_by_folder[folder.name] = files
-            for filename in files:
-                file_path = folder / filename
-                gallery_items.append(
-                    {
-                        "folder": folder.name,
-                        "file": filename,
-                        "sizeBytes": file_path.stat().st_size,
-                    }
-                )
 
-    gallery_items.sort(key=lambda item: (item["sizeBytes"], item["folder"].lower(), item["file"].lower()))
+    ordered_keys = _ordered_folders(set(gallery_by_folder.keys()))
+    gallery_by_folder_ordered = {k: gallery_by_folder[k] for k in ordered_keys}
+
+    gallery_items: list[dict] = []
+    for folder_name in ordered_keys:
+        folder = PROJECTS_DIR / folder_name
+        for filename in gallery_by_folder[folder_name]:
+            file_path = folder / filename
+            gallery_items.append(
+                {
+                    "folder": folder_name,
+                    "file": filename,
+                    "sizeBytes": file_path.stat().st_size,
+                }
+            )
 
     return {
         "labelOverrides": LABEL_OVERRIDES,
-        "galleryByFolder": gallery_by_folder,
+        "galleryByFolder": gallery_by_folder_ordered,
         "galleryItems": gallery_items,
     }
 

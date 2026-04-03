@@ -11,3 +11,6 @@ Desktop.ini
 
 # Logs
 *.log
+
+# Large local archives (exceeds GitHub 100MB file limit)
+assets/images/projects.zip
