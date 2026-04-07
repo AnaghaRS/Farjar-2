@@ -66,6 +66,8 @@
     }
     @media (max-width:640px){
       .f-quote-row{grid-template-columns:1fr;}
+      .f-quote-modal-left,.f-quote-modal-right{padding:1.25rem;}
+      .f-quote-close{top:8px;right:8px;}
     }
   </style>
 
@@ -79,13 +81,13 @@
   </section>
 
   <!-- Three.js + Intro -->
-  <section style="display:grid;grid-template-columns:1fr 1fr;min-height:80vh">
-    <div class="f-three-wrap" id="servicesThree" style="min-height:60vh;background:var(--dark)"></div>
-    <div style="padding:6rem 4rem;display:flex;flex-direction:column;justify-content:center">
-      <span style="font-size:0.7rem;letter-spacing:5px;text-transform:uppercase;color:var(--orange);display:block;margin-bottom:1.5rem" data-reveal="up">End-to-End Solutions</span>
-      <h2 style="font-size:clamp(2rem,4vw,3.5rem);font-weight:800;letter-spacing:-1px;margin-bottom:2rem;color:#99380B" data-reveal="up">From Vision<br>to Reality</h2>
-      <p style="font-size:1rem;color:#161A1D;line-height:1.8;max-width:450px" data-reveal="up">FARJAR offers a full range of construction and interior design services. Whether you need a complete commercial fitout or specialized joinery work, our expert team delivers results that exceed expectations.</p>
-      <button id="fOpenQuoteModal" type="button" style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:2rem;padding:1rem 2rem;font-size:0.8rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;background:var(--orange);color:var(--dark);align-self:flex-start;transition:all 0.3s ease;border:none;" data-reveal="up" onmouseover="this.style.background='#99380B';this.style.color='var(--beige)'" onmouseout="this.style.background='var(--orange)';this.style.color='var(--dark)'">Get a Quote →</button>
+  <section class="f-services-intro">
+    <div class="f-three-wrap f-services-intro__viz" id="servicesThree"></div>
+    <div class="f-services-intro__content">
+      <span class="f-services-intro__eyebrow" data-reveal="up">End-to-End Solutions</span>
+      <h2 class="f-services-intro__title" data-reveal="up">From Vision<br>to Reality</h2>
+      <p class="f-services-intro__lead" data-reveal="up">FARJAR offers a full range of construction and interior design services. Whether you need a complete commercial fitout or specialized joinery work, our expert team delivers results that exceed expectations.</p>
+      <button id="fOpenQuoteModal" type="button" class="f-services-intro__cta" data-reveal="up">Get a Quote →</button>
     </div>
   </section>
 
@@ -140,7 +142,7 @@
   <section class="f-services f-services--card-grid">
     <div class="f-services-header">
       <div>
-        <span style="font-size:0.7rem;letter-spacing:5px;text-transform:uppercase;color:var(--orange);display:block;margin-bottom:1rem" data-reveal="up">Services</span>
+        <span class="f-section-eyebrow" data-reveal="up">Services</span>
         <h2 data-reveal="up">Services<br>We Provide</h2>
         <p data-reveal="up" style="margin-top:1rem;">Every project is handled with meticulous attention to detail and a commitment to timely delivery.</p>
       </div>
@@ -242,7 +244,7 @@
   </section>
 
   <section class="f-cta">
-    <h2 data-reveal="up">Ready to Start<br>Your <span style="color:var(--orange)">Project?</span></h2>
+    <h2 data-reveal="up">Ready to Start<br>Your <span class="f-text-orange">Project?</span></h2>
     <p data-reveal="up">Get in touch to discuss your requirements and receive a tailored proposal.</p>
     <a href="https://api.whatsapp.com/send?phone=96893930050" target="_blank" rel="noopener noreferrer" data-reveal="up"><span>Contact Us →</span></a>
   </section>

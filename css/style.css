@@ -11,6 +11,23 @@
   --font:   'Inter', sans-serif;
 }
 
+/* --- Small utilities (avoid repeated inline styles; same visuals as previous inline rules) --- */
+.f-section-eyebrow{
+  font-size:0.7rem;letter-spacing:5px;text-transform:uppercase;
+  color:var(--orange);display:block;margin-bottom:1rem;
+}
+.f-outline-cta-label{
+  font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;
+  padding:0.75rem 1.5rem;border:1px solid rgba(22,26,29,0.2);color:var(--dark);
+}
+.f-section-cta-wrap{text-align:center;margin-top:3rem;}
+.f-scroll-progress{
+  position:fixed;top:0;left:0;height:3px;width:0%;
+  background:linear-gradient(90deg,var(--orange),var(--brown));
+  z-index:10001;transition:width 0.1s ease;
+}
+.f-text-orange{color:var(--orange);}
+
 /* === RESET === */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{font-size:16px;overflow-x:hidden;scroll-behavior:smooth}
@@ -159,16 +176,11 @@ input,textarea{font-family:inherit;outline:none}
   font-size:1.05rem !important;
 }
 
-.f-services span[data-reveal][style*="letter-spacing:5px"],
-.f-services span[data-reveal][style*="letter-spacing: 5px"],
-.f-projects span[data-reveal][style*="letter-spacing:5px"],
-.f-projects span[data-reveal][style*="letter-spacing: 5px"],
-.f-gallery span[data-reveal][style*="letter-spacing:5px"],
-.f-gallery span[data-reveal][style*="letter-spacing: 5px"],
-.f-team span[data-reveal][style*="letter-spacing:5px"],
-.f-team span[data-reveal][style*="letter-spacing: 5px"],
-.f-contact span[data-reveal][style*="letter-spacing:5px"],
-.f-contact span[data-reveal][style*="letter-spacing: 5px"]{
+.f-services .f-section-eyebrow,
+.f-projects .f-section-eyebrow,
+.f-gallery .f-section-eyebrow,
+.f-team .f-section-eyebrow,
+.f-contact .f-section-eyebrow{
   font-size:1.15rem !important;
 }
 
@@ -223,7 +235,7 @@ input,textarea{font-family:inherit;outline:none}
   max-width:380px;margin-top:2rem;line-height:1.8;
 }
 .f-hero-cta{
-  margin-top:2.5rem;display:flex;align-items:center;gap:1rem;
+  margin-top:2.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;
 }
 .f-hero-cta a{
   display:inline-flex;align-items:center;gap:0.5rem;
@@ -243,6 +255,8 @@ input,textarea{font-family:inherit;outline:none}
 .f-hero-cta a:hover::before{transform:translateX(0)}
 .f-hero-cta a span{position:relative;z-index:1}
 .f-hero-cta a:hover{border-color:var(--orange);color:#fff}
+.f-hero-cta.f-hero-cta--flush{margin:0;}
+.f-hero-cta.f-hero-cta--inline-flex{margin:0;display:inline-flex;}
 
 /* Scroll indicator */
 .f-scroll-cue{
@@ -753,7 +767,19 @@ input,textarea{font-family:inherit;outline:none}
   background:linear-gradient(135deg,var(--brown),var(--dark));
   display:flex;align-items:center;justify-content:center;
 }
+.f-team-member-photo{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center 20%;
+  z-index:0;
+}
+.f-team-member-bg:has(.f-team-member-photo){
+  background:var(--dark);
+}
+.f-team-member-bg:has(.f-team-member-photo) svg{
+  display:none;
+}
 .f-team-member-bg svg{
+  position:relative;z-index:1;
   width:60px;height:60px;opacity:0.15;
 }
 .f-team-member-bio{
@@ -765,17 +791,17 @@ input,textarea{font-family:inherit;outline:none}
   opacity:0.9;
   transition:all 0.45s cubic-bezier(0.77,0,0.175,1);
   border:1px solid rgba(220,215,212,0.12);
-  backdrop-filter:blur(6px) saturate(1.08);
+  border-top:none;
 }
 .f-team-member:hover .f-team-member-bio{
   transform:translateY(0);
   opacity:1;
   background:linear-gradient(to top,rgba(22,26,29,0.76) 0%,rgba(22,26,29,0.34) 58%,rgba(22,26,29,0.12) 100%);
   border-color:rgba(255,132,2,0.35);
+  border-top:none;
   box-shadow:
     0 16px 36px rgba(22,26,29,0.38),
-    0 0 22px rgba(255,132,2,0.2),
-    inset 0 1px 0 rgba(220,215,212,0.2);
+    0 0 22px rgba(255,132,2,0.2);
 }
 .f-team-member-name{
   font-size:1.35rem;font-weight:700;margin-bottom:0.35rem;
@@ -1115,6 +1141,100 @@ input,textarea{font-family:inherit;outline:none}
 }
 .f-three-wrap canvas{display:block;width:100%!important;height:100%!important}
 
+/* === ABOUT PAGE — Foundation + interactive (layout in CSS for breakpoints) === */
+.f-about-foundation{
+  padding:clamp(3.5rem,8vw,8rem) clamp(1.25rem,4vw,3rem);
+}
+.f-about-foundation__inner{max-width:1200px;margin:0 auto;}
+.f-about-foundation__heading{
+  font-size:clamp(2rem,4vw,3.5rem);font-weight:800;letter-spacing:-1px;
+  margin-bottom:clamp(2rem,5vw,4rem);color:#99380B;
+}
+.f-about-foundation__grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
+}
+.f-about-foundation__card{
+  padding:clamp(1.75rem,5vw,4rem);
+  border:1px solid rgba(22,26,29,0.06);position:relative;
+}
+.f-about-foundation__card--accent{background:rgba(255,132,2,0.03);}
+.f-about-foundation__label{
+  font-size:0.8rem;font-weight:800;letter-spacing:0.28em;text-transform:uppercase;
+  color:#99380B;display:block;margin-bottom:1.25rem;
+}
+.f-about-foundation__card-title{
+  font-size:clamp(1.65rem,3vw,2rem);font-weight:800;margin-bottom:1rem;
+  line-height:1.15;letter-spacing:-0.02em;color:#FF8402;
+}
+.f-about-foundation__card-text{font-size:0.95rem;color:#161A1D;line-height:1.8;}
+
+.f-about-interactive{
+  padding:0 clamp(1.25rem,4vw,3rem) clamp(4rem,10vw,10rem);
+}
+.f-about-interactive__inner{
+  max-width:1200px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(1.5rem,4vw,4rem);align-items:center;
+}
+.f-about-interactive__canvas{
+  min-height:280px;
+  height:clamp(300px,42vw,500px);
+}
+.f-about-interactive__eyebrow{
+  font-size:clamp(0.85rem,2.5vw,1rem);letter-spacing:5px;text-transform:uppercase;
+  color:var(--orange);display:block;margin-bottom:1.5rem;
+}
+.f-about-interactive__title{
+  font-size:clamp(2rem,4vw,3rem);font-weight:800;letter-spacing:-1px;
+  margin-bottom:2rem;color:#99380B;
+}
+.f-about-values-list{display:flex;flex-direction:column;gap:1.5rem;}
+.f-about-value-row{display:flex;gap:1rem;align-items:flex-start;}
+.f-about-value-icon{
+  width:40px;height:40px;flex-shrink:0;display:flex;
+  align-items:center;justify-content:center;
+  background:rgba(255,132,2,0.1);border-radius:2px;
+}
+.f-about-value-row__h{font-weight:700;margin-bottom:0.25rem;color:#FF8402;}
+.f-about-value-row__p{font-size:0.85rem;color:#161A1D;line-height:1.6;}
+
+/* === SERVICES PAGE — Three.js + intro split === */
+.f-services-intro{
+  display:grid;grid-template-columns:1fr 1fr;
+  min-height:min(80vh,56rem);
+}
+.f-services-intro__viz{
+  min-height:min(60vh,32rem);
+  background:var(--dark);
+}
+.f-services-intro__content{
+  padding:clamp(2.5rem,8vw,6rem) clamp(1.5rem,5vw,4rem);
+  display:flex;flex-direction:column;justify-content:center;
+}
+.f-services-intro__eyebrow{
+  font-size:0.7rem;letter-spacing:5px;text-transform:uppercase;
+  color:var(--orange);display:block;margin-bottom:1.5rem;
+}
+.f-services-intro__title{
+  font-size:clamp(2rem,4vw,3.5rem);font-weight:800;letter-spacing:-1px;
+  margin-bottom:2rem;color:#99380B;
+}
+.f-services-intro__lead{
+  font-size:1rem;color:#161A1D;line-height:1.8;max-width:450px;
+}
+.f-services-intro__cta{
+  display:inline-flex;align-items:center;gap:0.5rem;margin-top:2rem;
+  padding:1rem 2rem;font-size:0.8rem;font-weight:600;letter-spacing:2px;
+  text-transform:uppercase;background:var(--orange);color:var(--dark);
+  align-self:flex-start;transition:background 0.3s ease,color 0.3s ease;border:none;
+}
+.f-services-intro__cta:hover{background:#99380B;color:var(--beige);}
+
+/* Home contact: roomier desktop padding without blocking mobile rules */
+@media(min-width:1025px){
+  .f-contact-form-side--splash{padding:6rem 4rem;}
+}
+
 /* === PAGE HEADER — Cinematic === */
 .f-page-hero{
   height:60vh;position:relative;overflow:hidden;
@@ -1265,10 +1385,17 @@ section{
   .f-footer-top{grid-template-columns:1fr 1fr}
   .f-stats{grid-template-columns:1fr 1fr}
   .f-stat{border-bottom:1px solid rgba(22,26,29,0.06)}
-  .f-page-hero{margin-top:4.4rem}
+  .f-page-hero{margin-top:4.4rem;padding-left:clamp(1rem,3vw,3rem);padding-right:clamp(1rem,3vw,3rem)}
+  .f-services,.f-team,.f-gallery,.f-cta{padding-left:clamp(1rem,3vw,3rem);padding-right:clamp(1rem,3vw,3rem)}
+  .f-about-foundation__grid{grid-template-columns:1fr;}
+  .f-about-interactive__inner{grid-template-columns:1fr;gap:2rem;}
+  .f-services-intro{grid-template-columns:1fr;min-height:0;}
+  .f-services-intro__viz{min-height:42vh;}
+  .f-about-visual-stat{left:clamp(1rem,4vw,2rem);bottom:clamp(1.5rem,4vw,4rem);padding:1.25rem 1.5rem;}
 }
 @media(max-width:640px){
-  .f-nav{padding:1rem 1.5rem}
+  .f-navbar{padding-left:clamp(0.65rem,3vw,1.25rem);padding-right:clamp(0.65rem,3vw,1.25rem)}
+  .f-navbar-logo img{height:clamp(50px,14vw,68px)}
   .f-hero-title{font-size:clamp(2.5rem,12vw,4rem)}
   .f-gallery-grid{grid-template-columns:1fr;grid-auto-rows:200px}
   .f-gallery-grid.f-gallery-grid--preview .f-gal-item:nth-child(n){
@@ -1282,7 +1409,25 @@ section{
   .f-stats{grid-template-columns:1fr}
   .f-team-member{height:400px}
   .f-services{padding:4.5rem 1.5rem}
-  .f-page-hero{margin-top:4.1rem}
+  .f-page-hero{margin-top:4.1rem;padding:2rem clamp(1rem,4vw,3rem);height:auto;min-height:52vh}
+  .f-page-hero-content h1{font-size:clamp(2rem,9vw,3.2rem)}
+  .f-about-interactive__canvas{height:min(58vw,360px);min-height:220px}
+  .f-footer{padding:2.5rem clamp(1rem,4vw,3rem) 1.25rem}
+  .f-cta{padding:clamp(3rem,12vw,6rem) clamp(1rem,4vw,3rem)}
+  .f-projects-scroll{padding:0 clamp(1rem,4vw,3rem) clamp(3rem,8vw,6rem)}
+  .f-projects-header{padding:0 clamp(1rem,4vw,3rem) clamp(2.5rem,6vw,4rem)}
+  .f-stat{padding:clamp(2rem,6vw,3rem) 1rem}
+  .f-project-name{font-size:clamp(1.2rem,5vw,1.8rem)}
+  .f-project-info{padding:clamp(1.25rem,4vw,3rem)}
+  .f-project-card{height:min(65vh,28rem)}
+  .f-gallery-view-close{top:1rem;right:1rem;width:44px;height:44px}
+  .f-gallery-view-nav.prev{left:0.75rem}
+  .f-gallery-view-nav.next{right:0.75rem}
+  .f-contact-map-overlay{padding:clamp(1rem,4vw,1.5rem);max-height:min(50vh,20rem);overflow-y:auto}
+  .f-hero-left{padding:4rem clamp(1rem,4vw,2rem) 3.25rem}
+  .f-scroll-cue{left:clamp(1rem,4vw,2rem);bottom:clamp(1.5rem,5vw,3rem)}
+  .f-about-content{padding:2.5rem 1.25rem}
+  .f-team,.f-gallery{padding:4rem 1.25rem}
   .f-services--card-grid .f-service-stack{
     grid-template-columns:1fr;
     gap:1rem;

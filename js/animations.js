@@ -227,26 +227,26 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---- Subtle Magnetic Button Effect ---- */
   if (supportsHover && !prefersReducedMotion) {
     document.querySelectorAll('.f-hero-cta a, .f-cta a, .f-form-submit').forEach(btn => {
-    btn.addEventListener('mousemove', e => {
-      const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-      gsap.to(btn, {
-        x: x * 0.05,
-        y: y * 0.05,
-        duration: 0.22,
-        ease: 'power2.out',
+      btn.addEventListener('mousemove', e => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        gsap.to(btn, {
+          x: x * 0.05,
+          y: y * 0.05,
+          duration: 0.22,
+          ease: 'power2.out',
+        });
       });
-    });
 
-    btn.addEventListener('mouseleave', () => {
-      gsap.to(btn, {
-        x: 0, y: 0,
-        duration: 0.28,
-        ease: 'power3.out',
+      btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, {
+          x: 0, y: 0,
+          duration: 0.28,
+          ease: 'power3.out',
+        });
       });
     });
-  });
   }
 
   /* ---- Section Heading Animations (Slide + Clip) ---- */
@@ -280,17 +280,26 @@ document.addEventListener('DOMContentLoaded', () => {
     serviceSlider.style.left = '0px';
   }
 
-  const SERVICE_DOT_WINDOW = 5;
+  const PAGINATED_DOT_WINDOW = 5;
 
-  function renderServiceDots() {
-    if (!serviceDotsContainer || !serviceItems.length) return;
-    const n = serviceItems.length;
-    serviceDotsContainer.innerHTML = '';
+  /** Shared dot strip for services slider and project category sliders (same UX, less duplication). */
+  function renderPaginatedDots({
+    container,
+    total,
+    activeIndex,
+    onSelect,
+    ellipsisLeftLabel,
+    ellipsisRightLabel,
+    ariaItemLabel,
+  }) {
+    if (!container || total < 1) return;
+
+    container.innerHTML = '';
     const start =
-      n <= SERVICE_DOT_WINDOW
+      total <= PAGINATED_DOT_WINDOW
         ? 0
-        : Math.min(Math.max(serviceIndex - 2, 0), n - SERVICE_DOT_WINDOW);
-    const count = Math.min(SERVICE_DOT_WINDOW, n);
+        : Math.min(Math.max(activeIndex - 2, 0), total - PAGINATED_DOT_WINDOW);
+    const count = Math.min(PAGINATED_DOT_WINDOW, total);
 
     function appendEllipsis(direction) {
       const btn = document.createElement('button');
@@ -298,39 +307,46 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.className = 'f-service-dot f-service-dot--ellipsis';
       btn.textContent = '\u2026';
       if (direction === 'left') {
-        btn.setAttribute('aria-label', 'Earlier slides');
-        btn.addEventListener('click', () => {
-          goToService(start - 1);
-          scheduleServiceAutoplay();
-        });
+        btn.setAttribute('aria-label', ellipsisLeftLabel);
+        btn.addEventListener('click', () => onSelect(start - 1));
       } else {
-        btn.setAttribute('aria-label', 'Later slides');
-        btn.addEventListener('click', () => {
-          goToService(start + count);
-          scheduleServiceAutoplay();
-        });
+        btn.setAttribute('aria-label', ellipsisRightLabel);
+        btn.addEventListener('click', () => onSelect(start + count));
       }
-      serviceDotsContainer.appendChild(btn);
+      container.appendChild(btn);
     }
 
-    if (n > SERVICE_DOT_WINDOW && start > 0) appendEllipsis('left');
+    if (total > PAGINATED_DOT_WINDOW && start > 0) appendEllipsis('left');
 
     for (let i = 0; i < count; i++) {
       const idx = start + i;
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = 'f-service-dot' + (idx === serviceIndex ? ' active' : '');
+      btn.className = 'f-service-dot' + (idx === activeIndex ? ' active' : '');
       btn.dataset.index = String(idx);
-      btn.setAttribute('aria-label', 'Service slide ' + (idx + 1) + ' of ' + n);
+      btn.setAttribute('aria-label', ariaItemLabel(idx, total));
       btn.textContent = String(idx + 1);
-      btn.addEventListener('click', () => {
-        goToService(idx);
-        scheduleServiceAutoplay();
-      });
-      serviceDotsContainer.appendChild(btn);
+      btn.addEventListener('click', () => onSelect(idx));
+      container.appendChild(btn);
     }
 
-    if (n > SERVICE_DOT_WINDOW && start + count < n) appendEllipsis('right');
+    if (total > PAGINATED_DOT_WINDOW && start + count < total) appendEllipsis('right');
+  }
+
+  function renderServiceDots() {
+    if (!serviceDotsContainer || !serviceItems.length) return;
+    renderPaginatedDots({
+      container: serviceDotsContainer,
+      total: serviceItems.length,
+      activeIndex: serviceIndex,
+      onSelect: (idx) => {
+        goToService(idx);
+        scheduleServiceAutoplay();
+      },
+      ellipsisLeftLabel: 'Earlier slides',
+      ellipsisRightLabel: 'Later slides',
+      ariaItemLabel: (idx, n) => 'Service slide ' + (idx + 1) + ' of ' + n,
+    });
   }
 
   function goToService(index) {
@@ -450,7 +466,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ---- Project category sliders (projects.html — same pagination pattern as services) ---- */
-  const PROJECT_DOT_WINDOW = 5;
   const PROJECT_AUTOPLAY_MS = 3000;
 
   function initProjectPortfolioSliders() {
@@ -492,44 +507,15 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       function renderDots() {
-        const n = cards.length;
-        dotsContainer.innerHTML = '';
-        const start =
-          n <= PROJECT_DOT_WINDOW
-            ? 0
-            : Math.min(Math.max(index - 2, 0), n - PROJECT_DOT_WINDOW);
-        const count = Math.min(PROJECT_DOT_WINDOW, n);
-
-        function appendEllipsis(direction) {
-          const btn = document.createElement('button');
-          btn.type = 'button';
-          btn.className = 'f-service-dot f-service-dot--ellipsis';
-          btn.textContent = '\u2026';
-          if (direction === 'left') {
-            btn.setAttribute('aria-label', 'Earlier projects');
-            btn.addEventListener('click', () => userGoTo(start - 1, true));
-          } else {
-            btn.setAttribute('aria-label', 'Later projects');
-            btn.addEventListener('click', () => userGoTo(start + count, true));
-          }
-          dotsContainer.appendChild(btn);
-        }
-
-        if (n > PROJECT_DOT_WINDOW && start > 0) appendEllipsis('left');
-
-        for (let i = 0; i < count; i++) {
-          const idx = start + i;
-          const btn = document.createElement('button');
-          btn.type = 'button';
-          btn.className = 'f-service-dot' + (idx === index ? ' active' : '');
-          btn.dataset.index = String(idx);
-          btn.setAttribute('aria-label', 'Project slide ' + (idx + 1) + ' of ' + n);
-          btn.textContent = String(idx + 1);
-          btn.addEventListener('click', () => userGoTo(idx, true));
-          dotsContainer.appendChild(btn);
-        }
-
-        if (n > PROJECT_DOT_WINDOW && start + count < n) appendEllipsis('right');
+        renderPaginatedDots({
+          container: dotsContainer,
+          total: cards.length,
+          activeIndex: index,
+          onSelect: (idx) => userGoTo(idx, true),
+          ellipsisLeftLabel: 'Earlier projects',
+          ellipsisRightLabel: 'Later projects',
+          ariaItemLabel: (idx, n) => 'Project slide ' + (idx + 1) + ' of ' + n,
+        });
       }
 
       function scrollPositionForIndex(i) {
@@ -1029,7 +1015,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ---- Smooth Scroll Progress Indicator ---- */
   const scrollProgress = document.createElement('div');
-  scrollProgress.style.cssText = 'position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--orange),var(--brown));z-index:10001;transition:width 0.1s ease;width:0%;';
+  scrollProgress.className = 'f-scroll-progress';
   document.body.appendChild(scrollProgress);
   window.addEventListener('scroll', () => {
     const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;

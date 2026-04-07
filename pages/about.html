@@ -49,43 +49,43 @@
   </section>
 
   <!-- Mission / Vision — Layered Cards -->
-  <section style="padding:8rem 3rem;">
-    <div style="max-width:1200px;margin:0 auto;">
-      <h2 style="font-size:clamp(2rem,4vw,3.5rem);font-weight:800;letter-spacing:-1px;margin-bottom:4rem;color:#99380B" data-reveal="up">Our Foundation</h2>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
-        <div style="padding:4rem;border:1px solid rgba(22,26,29,0.06);position:relative" data-reveal="left">
-          <span style="font-size:0.8rem;font-weight:800;letter-spacing:0.28em;text-transform:uppercase;color:#99380B;display:block;margin-bottom:1.25rem">Mission</span>
-          <h3 style="font-size:clamp(1.65rem,3vw,2rem);font-weight:800;margin-bottom:1rem;line-height:1.15;letter-spacing:-0.02em;color:#FF8402">Excellence in Every Detail</h3>
-          <p style="font-size:0.95rem;color:#161A1D;line-height:1.8">To deliver world-class construction and interior fitout solutions that exceed client expectations through innovative design, precision craftsmanship, and unwavering commitment to quality and timely delivery.</p>
+  <section class="f-about-foundation">
+    <div class="f-about-foundation__inner">
+      <h2 class="f-about-foundation__heading" data-reveal="up">Our Foundation</h2>
+      <div class="f-about-foundation__grid">
+        <div class="f-about-foundation__card" data-reveal="left">
+          <span class="f-about-foundation__label">Mission</span>
+          <h3 class="f-about-foundation__card-title">Excellence in Every Detail</h3>
+          <p class="f-about-foundation__card-text">To deliver world-class construction and interior fitout solutions that exceed client expectations through innovative design, precision craftsmanship, and unwavering commitment to quality and timely delivery.</p>
         </div>
-        <div style="padding:4rem;border:1px solid rgba(22,26,29,0.06);background:rgba(255,132,2,0.03);position:relative" data-reveal="right">
-          <span style="font-size:0.8rem;font-weight:800;letter-spacing:0.28em;text-transform:uppercase;color:#99380B;display:block;margin-bottom:1.25rem">Vision</span>
-          <h3 style="font-size:clamp(1.65rem,3vw,2rem);font-weight:800;margin-bottom:1rem;line-height:1.15;letter-spacing:-0.02em;color:#FF8402">Building the Future</h3>
-          <p style="font-size:0.95rem;color:#161A1D;line-height:1.8">To become the most trusted and sought-after construction and interior fitout company in the Gulf region, known for transforming spaces and setting new standards of excellence.</p>
+        <div class="f-about-foundation__card f-about-foundation__card--accent" data-reveal="right">
+          <span class="f-about-foundation__label">Vision</span>
+          <h3 class="f-about-foundation__card-title">Building the Future</h3>
+          <p class="f-about-foundation__card-text">To become the most trusted and sought-after construction and interior fitout company in the Gulf region, known for transforming spaces and setting new standards of excellence.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Interactive Three.js + Values -->
-  <section style="padding:0 3rem 10rem;">
-    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center">
-      <div class="f-three-wrap" id="aboutThree" style="height:500px;"></div>
-      <div>
-        <span style="font-size:1rem;letter-spacing:5px;text-transform:uppercase;color:var(--orange);display:block;margin-bottom:1.5rem" data-reveal="up">Our Values</span>
-        <h2 style="font-size:clamp(2rem,4vw,3rem);font-weight:800;letter-spacing:-1px;margin-bottom:2rem;color:#99380B" data-reveal="up">Built on Strong<br>Foundations</h2>
-        <div style="display:flex;flex-direction:column;gap:1.5rem" data-stagger>
-          <div style="display:flex;gap:1rem;align-items:start">
-            <div style="width:40px;height:40px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:rgba(255,132,2,0.1);border-radius:2px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF8402" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
-            <div><h4 style="font-weight:700;margin-bottom:0.25rem;color:#FF8402">Quality</h4><p style="font-size:0.85rem;color:#161A1D;line-height:1.6">Every detail matters. We use premium materials and fine craftsmanship.</p></div>
+  <section class="f-about-interactive">
+    <div class="f-about-interactive__inner">
+      <div class="f-three-wrap f-about-interactive__canvas" id="aboutThree"></div>
+      <div class="f-about-interactive__copy">
+        <span class="f-about-interactive__eyebrow" data-reveal="up">Our Values</span>
+        <h2 class="f-about-interactive__title" data-reveal="up">Built on Strong<br>Foundations</h2>
+        <div class="f-about-values-list" data-stagger>
+          <div class="f-about-value-row">
+            <div class="f-about-value-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF8402" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+            <div><h4 class="f-about-value-row__h">Quality</h4><p class="f-about-value-row__p">Every detail matters. We use premium materials and fine craftsmanship.</p></div>
           </div>
-          <div style="display:flex;gap:1rem;align-items:start">
-            <div style="width:40px;height:40px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:rgba(255,132,2,0.1);border-radius:2px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF8402" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-            <div><h4 style="font-weight:700;margin-bottom:0.25rem;color:#FF8402">Punctuality</h4><p style="font-size:0.85rem;color:#161A1D;line-height:1.6">We deliver on-time, every time, without compromising quality.</p></div>
+          <div class="f-about-value-row">
+            <div class="f-about-value-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF8402" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+            <div><h4 class="f-about-value-row__h">Punctuality</h4><p class="f-about-value-row__p">We deliver on-time, every time, without compromising quality.</p></div>
           </div>
-          <div style="display:flex;gap:1rem;align-items:start">
-            <div style="width:40px;height:40px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:rgba(255,132,2,0.1);border-radius:2px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF8402" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-            <div><h4 style="font-weight:700;margin-bottom:0.25rem;color:#FF8402">Collaboration</h4><p style="font-size:0.85rem;color:#161A1D;line-height:1.6">Your vision drives our work. We listen, collaborate, and deliver.</p></div>
+          <div class="f-about-value-row">
+            <div class="f-about-value-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF8402" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <div><h4 class="f-about-value-row__h">Collaboration</h4><p class="f-about-value-row__p">Your vision drives our work. We listen, collaborate, and deliver.</p></div>
           </div>
         </div>
       </div>
@@ -102,7 +102,7 @@
 
   <!-- CTA -->
   <section class="f-cta">
-    <h2 data-reveal="up">Let's Build Something<br><span style="color:var(--orange)">Exceptional</span></h2>
+    <h2 data-reveal="up">Let's Build Something<br><span class="f-text-orange">Exceptional</span></h2>
     <p data-reveal="up">Partner with FARJAR to transform your commercial space.</p>
     <a href="https://api.whatsapp.com/send?phone=96893930050" target="_blank" rel="noopener noreferrer" data-reveal="up"><span>Get In Touch →</span></a>
   </section>

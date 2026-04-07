@@ -70,11 +70,7 @@
     const allMobileLinks = mobileMenu.querySelectorAll('a');
 
     function updateActive(activeId) {
-      allDesktopLinks.forEach(link => {
-        const linkId = links.find(l => l.href === link.getAttribute('href'))?.id;
-        link.classList.toggle('active', linkId === activeId);
-      });
-      allMobileLinks.forEach(link => {
+      [...allDesktopLinks, ...allMobileLinks].forEach(link => {
         const linkId = links.find(l => l.href === link.getAttribute('href'))?.id;
         link.classList.toggle('active', linkId === activeId);
       });
