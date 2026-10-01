@@ -1,7 +1,10 @@
 window.GALLERY_IMAGES_DATA = {
   "labelOverrides": {
     "55 R_Bat": "55 R'Bat",
-    "Smile Line": "smile"
+    "Smile Line": "smile",
+    "IBC": "Italian Barista Cafe",
+    "Chaii": "Chaii",
+    "GHAIDA": "Ghaida"
   },
   "galleryByFolder": {
     "Watchesco": [
@@ -92,6 +95,20 @@ window.GALLERY_IMAGES_DATA = {
       "02-02.png",
       "02-03.png",
       "02-04.png"
+    ],
+    "IBC": [
+      "IBC-1.jpeg",
+      "IBC-2.jpeg",
+      "IBC-3.jpeg"
+    ],
+    "Chaii": [
+      "Chaii Salalah.jfif",
+      "CHAII-1.jpeg",
+      "CHAII-2.jpeg"
+    ],
+    "GHAIDA": [
+      "GHAIDA-1.jpeg",
+      "GHAIDA-2.jpeg"
     ]
   },
   "galleryItems": [
@@ -389,6 +406,46 @@ window.GALLERY_IMAGES_DATA = {
       "folder": "Smile Line",
       "file": "02-04.png",
       "sizeBytes": 13200700
+    },
+    {
+      "folder": "IBC",
+      "file": "IBC-1.jpeg",
+      "sizeBytes": 148508
+    },
+    {
+      "folder": "IBC",
+      "file": "IBC-2.jpeg",
+      "sizeBytes": 226218
+    },
+    {
+      "folder": "IBC",
+      "file": "IBC-3.jpeg",
+      "sizeBytes": 397550
+    },
+    {
+      "folder": "Chaii",
+      "file": "Chaii Salalah.jfif",
+      "sizeBytes": 763023
+    },
+    {
+      "folder": "Chaii",
+      "file": "CHAII-1.jpeg",
+      "sizeBytes": 187040
+    },
+    {
+      "folder": "Chaii",
+      "file": "CHAII-2.jpeg",
+      "sizeBytes": 73662
+    },
+    {
+      "folder": "GHAIDA",
+      "file": "GHAIDA-1.jpeg",
+      "sizeBytes": 1144061
+    },
+    {
+      "folder": "GHAIDA",
+      "file": "GHAIDA-2.jpeg",
+      "sizeBytes": 113349
     }
   ]
 };

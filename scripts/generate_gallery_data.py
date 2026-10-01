@@ -6,10 +6,13 @@ ROOT = Path(__file__).resolve().parents[1]
 PROJECTS_DIR = ROOT / "assets" / "images" / "projects"
 OUTPUT_JSON = ROOT / "data" / "gallery-images.json"
 OUTPUT_JS = ROOT / "data" / "gallery-images.js"
-WEB_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
+WEB_EXTENSIONS = {".jpg", ".jpeg", ".jfif", ".png", ".webp"}
 LABEL_OVERRIDES = {
     "55 R_Bat": "55 R'Bat",
     "Smile Line": "smile",
+    "IBC": "Italian Barista Cafe",
+    "Chaii": "Chaii",
+    "GHAIDA": "Ghaida",
 }
 
 # Project folders to omit from gallery data (still on disk / projects page if needed).
@@ -34,6 +37,9 @@ GALLERY_FOLDER_ORDER = [
     "55 Mawaleh",
     "Sign",
     "Smile Line",
+    "IBC",
+    "Chaii",
+    "GHAIDA",
 ]
 
 
