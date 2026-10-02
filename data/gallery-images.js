@@ -99,7 +99,8 @@ window.GALLERY_IMAGES_DATA = {
     "IBC": [
       "IBC-1.jpeg",
       "IBC-2.jpeg",
-      "IBC-3.jpeg"
+      "IBC-3.jpeg",
+      "ibc-4.jpeg"
     ],
     "Chaii": [
       "Chaii Salalah.jfif",
@@ -108,7 +109,8 @@ window.GALLERY_IMAGES_DATA = {
     ],
     "GHAIDA": [
       "GHAIDA-1.jpeg",
-      "GHAIDA-2.jpeg"
+      "GHAIDA-2.jpeg",
+      "square-image.jpg"
     ]
   },
   "galleryItems": [
@@ -423,6 +425,11 @@ window.GALLERY_IMAGES_DATA = {
       "sizeBytes": 397550
     },
     {
+      "folder": "IBC",
+      "file": "ibc-4.jpeg",
+      "sizeBytes": 192079
+    },
+    {
       "folder": "Chaii",
       "file": "Chaii Salalah.jfif",
       "sizeBytes": 763023
@@ -446,6 +453,11 @@ window.GALLERY_IMAGES_DATA = {
       "folder": "GHAIDA",
       "file": "GHAIDA-2.jpeg",
       "sizeBytes": 113349
+    },
+    {
+      "folder": "GHAIDA",
+      "file": "square-image.jpg",
+      "sizeBytes": 350192
     }
   ]
 };
